@@ -54,7 +54,7 @@
 				</button>
 			</div>
 			<div class="navbar-menu">
-				<a href="" class="navbar-item">Connection</a>
+				<a href="http://localhost:8100/Camagru_damoi/identification" class="navbar-item">Identification</a>
 				<a href="" class="navbar-item">My pictures</a>
 			</div>
 		</nav>
@@ -63,17 +63,15 @@
 
   <!-- columns ------------------------------------------------------------------------------------->
   <div class="columns">
-	<div class="column">
-		<div id="container">
-			<video autoplay="true" id="videoElement">
-
-			</video>
+		<div class="column">
+			<div id="container">
+				<video autoplay="true" id="videoElement"></video>
+			</div>
+			<button id="startbutton">Prendre une photo</button>
+			<canvas id="canvas"></canvas>
+			<img src="http://placekitten.com/g/320/261" id="photo" alt="photo">
+			<script src="src/webcam.js"></script>
 		</div>
-		<button id="startbutton">Prendre une photo</button>
-		<canvas id="canvas"></canvas>
-		<img src="http://placekitten.com/g/320/261" id="photo" alt="photo">
-		<script src="src/webcam.js"></script>
-	</div>
   </div>
 	<!-- <img src="content/ramen-logo.png" alt="Turn your world into a funky manga one" width="100%" height="50">
 
