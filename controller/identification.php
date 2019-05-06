@@ -1,34 +1,33 @@
 <?php
+require_once('view/identification.php');
 
-include('../view/identification.php');
-include_once('../db_crdtls.php');
+print_r($_POST);
 
-if ($_POST['mail']) {
-	try {
-		$db = new PDO ("mysql:host=$DB_HOST;dbname=$DB_NAME", $DB_USER, $DB_PWD);
-
-		$sql = "SELECT * FROM users WHERE mail = :mail";
-		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':mail', $_POST['mail'], PDO::PARAM_STR);
-
-		echo $sql . '</br></br>';
-		echo $_POST['mail'] . '</br></br>';
-
-		$result = $stmt->execute();
-		$stmt->setFetchMode(PDO::FETCH_ASSOC);
-		echo $result;
-		
-		if ($result) {
-			$user = $stmt->fetch();
-			if ($user) {
-				echo $user['pseudo'] . ' has mail: ' . $user['mail'] ;
-			}
-		}
-		else 
-			echo "Incorrect credentials";
+if ($_POST['submit-login']) {
+	include('model/user.php');
+	$user = new user();
+	echo '</br> attempting to connect in controller/identification.php</br>';
+	// echo getcwd();
+	// echo htmlspecialchars($_POST['test']), '</br>';
+	if ($user->connect($_POST['mail'], $_POST['pwd'])) {
+		echo 'connected, ';
+		$user->get_info();
 	}
-	catch (PDOException $e) {
-		die ("erreur ! " . $e->getMessage());
+}
+
+else if ($_POST['submit-register']) {
+	include('model/user.php');
+	$user = new user();
+	echo '</br> attempting to CREATE NEW USER in controller/identification.php</br>';
+	// echo getcwd();
+	// echo htmlspecialchars($_POST['test']), '</br>';
+	if ($user->create_new($_POST['mail'], $_POST['pwd'], $_POST['pseudo'])) {
+		echo 'created, ';
+		$user->connect($_POST['mail'], $_POST['pwd']);
+		$user->get_info();
+	}
+	else {
+		echo "failed";
 	}
 }
 ?>
