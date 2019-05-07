@@ -11,7 +11,7 @@
 		<div class="identification">
 			<div class="login">
 				<h1>Login</h1>
-				<form action="index.php?action=login" method="post">
+				<form action="index.php?action=identification" method="post">
 					<label for="mail_login">
 						<i class="fas fa-user"></i>
 					</label>
@@ -26,7 +26,7 @@
 			</div>
 			<div class="register">
 				<h1>Register</h1>
-				<form action="index.php?action=register" method="post">
+				<form action="index.php?action=identification" method="post">
 					<label for="mail">
 						<i class="fas fa-user"></i>
 					</label>

@@ -1,10 +1,13 @@
 <?php
+// session_reset();
+session_start();
+
 require_once('view/header.php');
 require_once('controller/controller.php');
 
 if (isset($_GET['action'])) {
-	if (isset($_GET['action']) == 'identification') {
-		login();
+	if ($_GET['action'] == 'identification') {
+		identification();
 	}
 }
 else {

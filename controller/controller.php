@@ -1,5 +1,6 @@
 <?php
+include_once('lib.php');
 
-function login() {
+function identification() {
 	require('identification.php');
 }
