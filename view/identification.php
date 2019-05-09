@@ -12,10 +12,10 @@
 			<div class="login">
 				<h1>Login</h1>
 				<form action="index.php?action=identification" method="post">
-					<label for="mail_login">
+					<label for="username_login">
 						<i class="fas fa-user"></i>
 					</label>
-					<input type="text" name="mail" placeholder="mail" id="mail" required>
+					<input type="text" name="username" placeholder="username" id="username" required>
 					<label for="password">
 						<i class="fas fa-lock"></i>
 					</label>
@@ -34,7 +34,7 @@
 					<label for="mail">
 						<i class="fas fa-child"></i>
 					</label>
-					<input type="text" name="pseudo" placeholder="pseudo" id="pseudo_rgstr" required>
+					<input type="text" name="username" placeholder="username" id="username_rgstr" required>
 					<label for="password">
 						<i class="fas fa-lock"></i>
 					</label>

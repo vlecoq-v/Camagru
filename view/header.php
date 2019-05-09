@@ -22,10 +22,14 @@
 				</button>
 			</div>
 			<div class="navbar-menu">
-			<?php if($_SESSION['logged'] == 1)
-				echo "<a href='index.php?action=identification' class='navbar-item'>log out</a>" ?>
-				<a href="index.php?action=identification" class="navbar-item">Identification</a>
-				<!-- <a href="controller/identification.php" class="navbar-item">Identification</a> -->
+			<?php 
+				if ($_SESSION['logged'] == 1)
+					echo "<a href='index.php/controller/log_out.php' class='navbar-item'>log out</a>";
+				else
+					echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"
+					// echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"
+			?>
+				<!-- <a href="index.php?action=identification" class="navbar-item">Identification</a> -->
 				<a href="" class="navbar-item">My pictures</a>
 			</div>
 		</nav>

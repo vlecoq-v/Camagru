@@ -4,23 +4,20 @@ class user {
 
 	private $info;
 
-	public function connect($mail, $pwd) {
-		echo $pwd;
+	public function connect($username, $pwd) {
+		// echo $pwd;
 		$db = $this->db_connect();
-		$sql = "SELECT * FROM users WHERE mail = :mail AND pwd = :pwd";
+		print($username);
+		// $sql = "SELECT * FROM users WHERE username = :username";
+		$sql = "SELECT * FROM users WHERE username = :username AND pwd = :pwd";
+
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
 		$stmt->execute();
-		// print($stmt);
-		// echo $mail;
-		// echo hash('whirlpool', $pwd);
-		// echo $stmt->fetch(PDO::FETCH_ASSOC);
-		// $this->info = $stmt->fetch(PDO::FETCH_ASSOC);
-		// $this->get_info();
 		if ($this->info = $stmt->fetch()) {
-			$this->get_info();
-
+			// $this->get_info();
+			// echo "</br>", hash('whirlpool', $pwd);
 			return (True);
 		}
 		else {
@@ -43,14 +40,15 @@ class user {
 	}
 
 	public function get_info() {
-		echo $this->info['pseudo'] . ' has mail: ' . $this->info['mail'];
+		// echo $this->info['username'] . ' has mail: ' . $this->info['mail'] . '</br>' . $this->info['pwd'];
+		return($this->info);
 	}
 
-	public function pseudo_exists($pseudo) {
+	public function username_exists($username) {
 		$db = $this->db_connect();
-		$sql = "SELECT * FROM users WHERE pseudo = :pseudo";
+		$sql = "SELECT * FROM users WHERE username = :username";
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+		$stmt->bindValue(':username', $pseudo, PDO::PARAM_STR);
 		$stmt->execute();
 		if ($stmt->rowcount() > 0)
 			return (True);
@@ -58,14 +56,15 @@ class user {
 			return False;
 	}
 
-	public function create_new($mail, $pwd, $pseudo) {
+	public function create_new($mail, $pwd, $username) {
 		$db = $this->db_connect();
-		$sql = "INSERT INTO users(pseudo, mail, pwd)
-			VALUES(:pseudo, :mail, :pwd)";
+		$sql = "INSERT INTO users(username, mail, pwd)
+			VALUES(:username, :mail, :pwd)";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		// echo $pwd . "and encrypted : " . hash('whirlpool', $pwd);
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
-		$stmt->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 		$result = $stmt->execute();
 		return $result;
 	}
