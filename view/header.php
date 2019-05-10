@@ -4,10 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Turansuforumu</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-	<link rel="stylesheet" href="../public/css/mycss.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<link href="../public/css/style_id.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="../public/css/mycss.css">
   </head>
-	
   <body>
 	  <!-- nvabar ---------------------------------------------------------------------------------------->
 		<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
@@ -23,8 +24,10 @@
 			</div>
 			<div class="navbar-menu">
 			<?php 
-				if ($_SESSION['logged'] == 1)
-					echo "<a href='index.php/controller/log_out.php' class='navbar-item'>log out</a>";
+				if ($_SESSION['logged'] == 1) {
+					echo "<a href='index.php?action=my_account' class='navbar-item'>My Account</a>";
+					echo "<a href='index.php?action=log_out' class='navbar-item'>Log Out</a>";
+				}
 				else
 					echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"
 					// echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"

@@ -1,20 +1,13 @@
 <?php
 require_once('view/identification.php');
 
-// print_r($_POST);
+// echo $user->get_info();
 
 if ($_POST['submit-login']) {
 	include('model/user.php');
 	$user = new user();
-	// print_r($_POST);
 	if ($user->connect($_POST['username'], $_POST['pwd'])) {
-		$_SESSION['logged'] = 1;
-		$_SESSION['user'] = $user->get_info();
-		print_r($_SESSION);
-		// header('Location: http://localhost:4200/index.php');
-		// header("Refresh:0");
-		// echo 'connected, ';
-		// $user->get_info();
+		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
 	}
 	else
 		echo display_warning('Wrong credentials');
@@ -22,7 +15,6 @@ if ($_POST['submit-login']) {
 else if ($_POST['submit-register']) {
 	include('model/user.php');
 	$user = new user();
-	// print_r($_POST);
 	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username'])) {
 		exit (display_warning("mail or username already exists"));
 	}
@@ -36,8 +28,8 @@ else if ($_POST['submit-register']) {
 	if ($user->create_new($_POST['mail'], $_POST['pwd'], $_POST['username'])) {
 		display_success('your account was created ! </br>
 			Please click on the activation link you received via mail to finalize your subscription');
-		// $user->connect($_POST['mail'], $_POST['pwd']);
-		// $user->get_info();
+		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";		
+		$user->connect($_POST['username']);
 	}
 	else {
 		display_warning("failed");

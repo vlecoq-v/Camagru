@@ -1,59 +1,32 @@
 <?php
+session_start();
 
 class user {
-
 	private $info;
 
-	public function connect($username, $pwd) {
-		// echo $pwd;
-		$db = $this->db_connect();
-		print($username);
-		// $sql = "SELECT * FROM users WHERE username = :username";
-		$sql = "SELECT * FROM users WHERE username = :username AND pwd = :pwd";
+// ------------- USER IDENTIFICATION ---------------
 
-		$stmt = $db->prepare($sql);
+	public function connect($username, $pwd = NULL) {
+		$db = $this->db_connect();
+		if (!is_null($pwd)) {
+			$sql = "SELECT * FROM users WHERE username = :username AND pwd = :pwd";
+			$stmt = $db->prepare($sql);
+			$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
+		}
+		else {
+			$sql = "SELECT * FROM users WHERE username = :username";
+			$stmt = $db->prepare($sql);
+		}
 		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
-		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
 		$stmt->execute();
 		if ($this->info = $stmt->fetch()) {
-			// $this->get_info();
-			// echo "</br>", hash('whirlpool', $pwd);
-			return (True);
+			$_SESSION['logged'] = 1;
+			$this->update_cookie();
+			return True;
 		}
 		else {
 			return False;
 		}
-	}
-
-	public function mail_exists($mail) {
-		$db = $this->db_connect();
-		$sql = "SELECT * FROM users WHERE mail = :mail";
-		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
-		$result = $stmt->execute();
-		$stmt->fetch();
-		// echo $stmt->rowCount(); 
-		if ($stmt->rowcount() > 0)
-			return (True);
-		else
-			return False;
-	}
-
-	public function get_info() {
-		// echo $this->info['username'] . ' has mail: ' . $this->info['mail'] . '</br>' . $this->info['pwd'];
-		return($this->info);
-	}
-
-	public function username_exists($username) {
-		$db = $this->db_connect();
-		$sql = "SELECT * FROM users WHERE username = :username";
-		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':username', $pseudo, PDO::PARAM_STR);
-		$stmt->execute();
-		if ($stmt->rowcount() > 0)
-			return (True);
-		else
-			return False;
 	}
 
 	public function create_new($mail, $pwd, $username) {
@@ -62,11 +35,78 @@ class user {
 			VALUES(:username, :mail, :pwd)";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
-		// echo $pwd . "and encrypted : " . hash('whirlpool', $pwd);
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
 		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 		$result = $stmt->execute();
 		return $result;
+	}
+
+
+// ------------- CHG USER INFO ---------------
+
+	public function change_mail($mail) {
+		$db = $this->db_connect();
+		$sql = "UPDATE users SET mail = (:mail) WHERE `usr_id` = (:usr_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+	public function change_username($username) {
+		$db = $this->db_connect();
+		$sql = "UPDATE users SET username = (:username) WHERE `usr_id` = (:usr_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
+		$result = $stmt->execute();
+		$this->connect($username);
+		return $result;
+	}
+
+	public function change_pwd($pwd) {
+		$db = $this->db_connect();
+		$sql = "UPDATE users SET pwd = (:pwd) WHERE `usr_id` = (:usr_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
+		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
+		$result = $stmt->execute();
+		return $result;
+	}
+
+
+// ------------- CREDENTIAL VERIFICATION ---------------
+
+	public function mail_exists($mail) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users WHERE mail = :mail";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		$result = $stmt->execute();
+		$stmt->fetch();
+		if ($stmt->rowcount() > 0)
+			return (True);
+		else
+			return False;
+	}
+
+	public function username_exists($username) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users WHERE username = :username";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->execute();
+		if ($stmt->rowcount() > 0)
+			return (True);
+		else
+			return False;
+	}
+
+// --------------- OTHERS ---------------
+
+	public function get_info() {
+		return($this->info);
 	}
 
 	private function db_connect() {
@@ -79,7 +119,14 @@ class user {
 			die ("</br>error connecting to DATABASE!</br>" . $e->getMessage());
 		}
 	}
+
+	public function update_cookie() {
+		$i = 0;
+		while ($i < 10) {
+			unset($this->info[$i]);
+			$i += 1;
+		}
+		$_SESSION['user'] = $this->get_info();
+		unset($_SESSION['user']['pwd']);
+	}
 }
-
-
-

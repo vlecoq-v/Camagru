@@ -1,7 +1,7 @@
 <?php
 
 function mail_is_correct($mail) {
-	if (filter_var('bob@example.com', FILTER_VALIDATE_EMAIL) == False)
+	if (filter_var($mail, FILTER_VALIDATE_EMAIL) == False)
 		return False;
 	else
 		return True;
