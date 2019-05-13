@@ -22,6 +22,10 @@ if (isset($_GET['action'])) {
 	else if ($_GET['action'] == 'download') {
 		download();
 	}
+	else if ($_GET['action'] == 'upload') {
+		echo "mamen";
+		upload();
+	}
 	else 
 		display_warning("An Error has occured");
 }

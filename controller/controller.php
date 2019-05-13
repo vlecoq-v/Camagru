@@ -16,3 +16,7 @@ function my_account() {
 function download() {
 	require('download.php');
 }
+
+function upload() {
+	require('upload.php');
+}

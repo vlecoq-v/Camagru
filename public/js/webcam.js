@@ -27,22 +27,12 @@ ev.preventDefault();
 }, false);
 
 download.addEventListener('click', function(ev){
-  // window.alert("ok");
-  var img    = canvas.toDataURL("image/png");
-  var a = $("<a>")
-    .attr("href", img)
-    .attr("download", "img.png")
-    .appendTo("body");
+  uploadImage();
+ev.preventDefault();
+}, false);
 
-a[0].click();
-
-a.remove();
-  // window.alert(img);
-  // window.open(img);
-  // img.download();
-
-  // document.write('<img src="'+img+'"/>');
-  // download();
+submit.addEventListener('click', function(ev){
+  changeImage();
 ev.preventDefault();
 }, false);
 
@@ -65,12 +55,72 @@ function takepicture() {
   // photo.setAttribute('src', canvas);
 };
 
-function download() {
-  // window.alert("ok");
-  var canvas = getElementById("canvas");
+function download_pic() {
+  var canvas = document.getElementById("canvas");
   var img    = canvas.toDataURL("image/png");
+  var main_div = document.getElementById("columns");
 
-  window.alert(img);
-  window.open(img);
-  document.write('<img src="'+img+'"/>');
+  console.log(canvas);
+  canvas = canvas.Value;
+  console.log(canvas);
+  console.log(img);
+
+//   canvas.src = "img";
+//   // window.alert("ok");
+//   console.log("in !");
+//   // window.alert(img);
+//   // window.open(img);
+//   // window.open(canvas);
+//   // document.write('<img src="'+img+'"/>');
+//     // var btn = document.createElement("a");
+//     // btn.setAttribute("href", img);
+//     // btn.setAttribute("download", "test.png");
+//     // main_div.appendChild(btn);
+//     // img.fetch('/public/img', {method: "POST", body: img});
+
+//     var request = new XMLHttpRequest();
+//   request.open("POST", "http://foo.com/submitform.php");
+//   request.send(formData);
+//     // var a = $("<a>")
+//     // .attr("href", img)
+//     // .attr("download", "img.png")
+//     // .appendTo("body");
+
+// btn.click();
+
+// a.remove();
+}
+
+function uploadImage() {
+  var canvas = document.getElementById("canvas");
+  var img = canvas.toDataURL("image/png");
+  var form = document.getElementById('uploadForm');
+  var formData = new FormData(form);
+  var xhr = new XMLHttpRequest();
+
+  console.log("sent");
+  console.log(img);
+  // window.alert("sent");
+  // formData.append('upload', img.src);
+  xhr.open('POST', 'upload.php', true);
+  xhr.setRequestHeader('Content-Type', 'application/upload');
+  xhr.send(img);
+  console.log(xhr.responseText);
+
+  // var canvasData = testCanvas.toDataURL("image/png");
+  // var ajax = new XMLHttpRequest();
+  // ajax.open("POST",'testSave.php',false);
+  // ajax.setRequestHeader('Content-Type', 'application/upload');
+  // ajax.send(canvasData );
+
+  // xhr.open('POST', img, true);
+  // xhr.addEventListener('load', function ()
+}
+
+function changeImage() {
+  var canvas = document.getElementById("canvas");
+  var img = canvas.toDataURL("image/png");
+
+  var upload = document.getElementById('upload');
+  upload.value = img;
 }
