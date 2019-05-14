@@ -1,10 +1,7 @@
 <?php
 require_once('view/identification.php');
 
-// echo $user->get_info();
-
 if ($_POST['submit-login']) {
-	include('model/user.php');
 	$user = new user();
 	if ($user->connect($_POST['username'], $_POST['pwd'])) {
 		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
@@ -13,7 +10,6 @@ if ($_POST['submit-login']) {
 		echo display_warning('Wrong credentials');
 }
 else if ($_POST['submit-register']) {
-	include('model/user.php');
 	$user = new user();
 	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username'])) {
 		exit (display_warning("mail or username already exists"));

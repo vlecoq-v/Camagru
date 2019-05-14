@@ -1,12 +1,18 @@
+html, body {
+    width  : 100%;
+    height : 100%;
+}
+
 #container {
 	margin: 0px auto;
 	width: 500px;
 	height: 375px;
 	border: 10px solid;
 }
+
 #videoElement {
-	width: 500px;
-	height: 375px;
+	/* width: 500px; */
+	/* height: 375px; */
 	background-color: #666;
 }
 
@@ -15,12 +21,14 @@ footer {
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-	color: white;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+		'Open Sans', 'Helvetica Neue', sans-serif;
+	/* color: white; */
 	height: 100%;
 	display: flex;
 	min-height: 100vh;
 	flex-direction: column;
+	padding-bottom:60px; 
   }
 	
 .columns {
@@ -31,9 +39,44 @@ body {
 .wrapper_footer {
 	color: darkgray;
 	padding: 1.5rem 1.5rem 2rem;
+	height: 70px;
 	position: absolute;
 	width: 100%;
-	flex: 1;
+	/* flex: 1; */
 	bottom: 0px;
 	background-color: hsl(0, 0%, 98%);
 }
+
+#container_overlay {
+	position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+	bottom: 0;
+	width: 50%;
+	height: 50%;
+}
+
+#overlay_back {
+    position   : absolute;
+    top        : 0;
+    left       : 0;
+    width      : 100%;
+    height     : 100%;
+    background : #000;
+    opacity    : 0.6;
+    filter     : alpha(opacity=60);
+    z-index    : 5;
+    display    : none;
+}
+
+#overlay {
+    position : absolute;
+    top      : 0;
+    left     : 0;
+    width    : 100%;
+    height   : 100%;
+    z-index  : 10;
+    display  : none;
+} 

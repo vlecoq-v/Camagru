@@ -23,13 +23,17 @@ if (isset($_GET['action'])) {
 		download();
 	}
 	else if ($_GET['action'] == 'upload') {
-		echo "mamen";
+		// require_once('view/Homepage.php');
 		upload();
+	}
+	else if ($_GET['action'] == 'picture') {
+		require_once('view/picture.php');
 	}
 	else 
 		display_warning("An Error has occured");
 }
 else {
-	require_once('view/Homepage.php');
+	require_once('view/picture.php');
 }
+
 require_once('view/footer.php');

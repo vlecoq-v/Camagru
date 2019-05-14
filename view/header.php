@@ -11,7 +11,7 @@
   </head>
   <body>
 	  <!-- nvabar ---------------------------------------------------------------------------------------->
-		<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+		<nav class="navbar is-primary is-bold is-spaced" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
 				<a href="index.php" class="navbar-item">
 					<img src="../public/img/filters/ramen-logo.png" alt="Turn your world into a funky manga one">
@@ -23,17 +23,32 @@
 				</button>
 			</div>
 			<div class="navbar-menu">
-			<?php 
-				if ($_SESSION['logged'] == 1) {
-					echo "<a href='index.php?action=my_account' class='navbar-item'>My Account</a>";
-					echo "<a href='index.php?action=log_out' class='navbar-item'>Log Out</a>";
-				}
-				else
-					echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"
-					// echo "<a href='index.php?action=identification' class='navbar-item'>Identification</a>"
-			?>
-				<!-- <a href="index.php?action=identification" class="navbar-item">Identification</a> -->
-				<a href="" class="navbar-item">My pictures</a>
+				<a href="index.php?action=picture" class="navbar-item">
+					<span class="icon">
+						<i class="fas fa-camera"></i>
+					</span>
+				</a>
+				<?php 
+					if ($_SESSION['logged'] == 1) {
+						echo "<a href='index.php?action=my_account' class='navbar-item'>
+							<span class='icon'>
+								<i class='fas fa-address-card'></i>
+							</span>
+						</a>";
+						echo "<a href='index.php?action=log_out' class='navbar-item'>
+							<span class='icon'>
+								<i class='fas fa-sign-out-alt'></i>
+							</span>
+						</a>";
+					}
+					else {
+						echo "<a href='index.php?action=identification' class='navbar-item'>
+							<span class='icon'>
+								<i class='fas fa-sign-in-alt'></i>
+							</span>
+						</a>";
+					}
+				?>
 			</div>
 		</nav>
 	</body>

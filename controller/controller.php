@@ -1,5 +1,6 @@
 <?php
-// include_once('lib.php');
+require_once('model/photo.php');
+require_once('model/user.php');
 
 function identification() {
 	require('identification.php');
