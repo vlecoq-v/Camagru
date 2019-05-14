@@ -19,14 +19,13 @@ if (navigator.mediaDevices.getUserMedia) {
 }
 
 pic_button.addEventListener('click', function(ev){
-  takepicture(changeImage());
-  
+  takepicture(1);
 ev.preventDefault();
 }, false);
 
 // ------------------ Creates the canvas and displays it within overlay --------
 
-function takepicture(callback) {
+function takepicture($verif) {
   // var canvas = document.createElement("canvas");
   var canvas = document.getElementById("canvas");
   var overlay = document.getElementById("overlay");
@@ -38,11 +37,11 @@ function takepicture(callback) {
   console.log(width);
   canvas.getContext('2d').drawImage(video, 0, 0, width, height);
   canvas.id = canvas;
-  container_overlay.appendChild(canvas);
+  // container_overlay.appendChild(canvas);
   overlay.style.display = "block";
   overlay_back.style.display = "block";
-  if (callback)
-    callback();
+  if ($verif === 1)
+    changeImage();
 };
 
 // ------------------ Sets the value of the upload form to the image --------
@@ -52,6 +51,7 @@ function changeImage() {
   var img = canvas.toDataURL("image/png");
 
   var upload = document.getElementById('upload_hidden');
+  // canvas.style.display = "none";
   upload.value = img;
   // window.alert("ok");
   // window.alert(img);

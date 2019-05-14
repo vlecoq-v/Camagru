@@ -6,15 +6,18 @@ class photo {
 
 // ------------- PHOTO REGISTRATION ---------------
 
-	public function decode($img_encoded) {
+	public function decode($image_encoded) {
 		$folderPath = "public/img/upload/";
-		$image_parts = explode(";base64,", $img_encoded);
+		$image_parts = explode(";base64,", $image_encoded);
 		$image_decoded = base64_decode($image_parts[1]);
 		$fileName = uniqid() . '.png';
 		$file = $folderPath . $fileName;
 		// echo $image_decoded;
 		// echo getcwd();
-		echo file_put_contents($file, $image_decoded);
+		echo $image_decoded . "</br>";
+		echo file_put_contents($file, $image_decoded) . "</br>";
+		// echo "<img src='" . $image_decoded . "'>";
+		// echo "<img src='" . $image_encoded . "'>";
 		return ($file);
 	}
 
