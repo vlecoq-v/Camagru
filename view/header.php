@@ -6,8 +6,8 @@
     <title>Turansuforumu</title>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-		<link href="../public/css/style_id.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="../public/css/mycss.css">
+		<link href="public/css/style_id.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="public/css/mycss.css">
   </head>
   <body>
 	  <!-- nvabar ---------------------------------------------------------------------------------------->

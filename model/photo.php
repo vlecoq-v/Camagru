@@ -14,8 +14,8 @@ class photo {
 		$file = $folderPath . $fileName;
 		// echo $image_decoded;
 		// echo getcwd();
-		echo $image_decoded . "</br>";
-		echo file_put_contents($file, $image_decoded) . "</br>";
+		// echo $image_decoded . "</br>";
+		file_put_contents($file, $image_decoded);
 		// echo "<img src='" . $image_decoded . "'>";
 		// echo "<img src='" . $image_encoded . "'>";
 		return ($file);

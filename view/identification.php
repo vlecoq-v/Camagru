@@ -1,4 +1,5 @@
 	<body>
+	<section class="hero">
 		<div class="identification">
 			<div class="login">
 				<h1>Login</h1>
@@ -34,6 +35,6 @@
 				</form>
 			</div>
 		</div>
-		
+	<section>
 	</body>
 </html>

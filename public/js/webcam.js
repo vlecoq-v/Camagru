@@ -1,4 +1,5 @@
-var video = document.querySelector("#videoElement");
+// var video = document.querySelector("#videoElement");
+var video = document.getElementById("videoElement");
 var pic_button  = document.querySelector('#pic_button');
 // var canvas       = document.getElementById('canvas');
 // var canvas       = document.querySelector('#canvas');
@@ -7,6 +8,8 @@ var width = document.getElementById('videoElement').clientWidth;
 var height = document.getElementById('videoElement').clientHeight;
 var download = document.getElementById('download');
 var overlay = document.getElementById("overlay");
+var another_button = document.getElementById("another_button");
+// var submit = document.getElementById("submit");
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true })
@@ -19,35 +22,40 @@ if (navigator.mediaDevices.getUserMedia) {
 }
 
 pic_button.addEventListener('click', function(ev){
-  takepicture(1);
+  // changeImage(takepicture());
+  takepicture(changeImage);
 ev.preventDefault();
 }, false);
 
+another_button.addEventListener('click', function(ev) {
+  leave_overlay();
+})
 // ------------------ Creates the canvas and displays it within overlay --------
 
-function takepicture($verif) {
-  // var canvas = document.createElement("canvas");
+function takepicture(callback) {
   var canvas = document.getElementById("canvas");
   var overlay = document.getElementById("overlay");
   var overlay_back = document.getElementById("overlay_back");
-  var container_overlay = document.getElementById("container_overlay");
-
+ 
+  width = video.offsetWidth;
+  height = video.offsetHeight;
   canvas.width = width;
   canvas.height = height;
-  console.log(width);
+  console.log(video.videoWidth);
+  console.log(video.offsetWidth);
+  console.log(video.height);
   canvas.getContext('2d').drawImage(video, 0, 0, width, height);
   canvas.id = canvas;
-  // container_overlay.appendChild(canvas);
   overlay.style.display = "block";
   overlay_back.style.display = "block";
-  if ($verif === 1)
-    changeImage();
+  // another_button.style = submit.style;
+  callback();
 };
 
 // ------------------ Sets the value of the upload form to the image --------
 
 function changeImage() {
-  var canvas = document.getElementById("canvas");
+  var canvas = document.getElementById("[object HTMLCanvasElement]");
   var img = canvas.toDataURL("image/png");
 
   var upload = document.getElementById('upload_hidden');
@@ -55,7 +63,13 @@ function changeImage() {
   upload.value = img;
   // window.alert("ok");
   // window.alert(img);
-  console.log(upload.value);
+  // console.log(upload.value);
+}
+
+function leave_overlay() {
+  // overlay.style.display = "none";
+  // overlay_back.style.display = "none";
+  document.location = '/index.php';
 }
 
 // function download_pic() {

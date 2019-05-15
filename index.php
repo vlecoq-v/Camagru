@@ -9,7 +9,7 @@ include_once('controller/lib.php');
 
 // echo $user->get_info();
 
-if (isset($_GET['action'])) {
+if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 	if ($_GET['action'] == 'identification') {
 		identification();
 	}
@@ -30,10 +30,19 @@ if (isset($_GET['action'])) {
 		require_once('view/picture.php');
 	}
 	else 
-		display_warning("An Error has occured");
+		display_warning("The page you are trying to find is not here!");
+}
+else if (isset($_GET['action']) AND $_SESSION['logged'] === 0) {
+	if ($_GET['action'] == 'identification') {
+		identification();
+	}
+	else if ($_GET['action'] == 'picture') {
+		identification();
+	}
 }
 else {
-	require_once('view/picture.php');
+	homepage();
+	// require_once('view/homepage.php');
 }
 
 require_once('view/footer.php');

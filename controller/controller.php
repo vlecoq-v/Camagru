@@ -1,6 +1,7 @@
 <?php
 require_once('model/photo.php');
 require_once('model/user.php');
+require_once('model/posts.php');
 
 function identification() {
 	require('identification.php');
@@ -20,4 +21,8 @@ function download() {
 
 function upload() {
 	require('upload.php');
+}
+
+function homepage() {
+	require('homepage.php');
 }
