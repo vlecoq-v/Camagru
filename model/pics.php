@@ -6,6 +6,8 @@ class pics {
 	public $all;
 	public $new;
 
+// ------------- GETTERS ---------------
+
 	public function get_count() {
 		$db = $this->db_connect();
 		$sql = "SELECT COUNT(*) FROM pics";
@@ -62,7 +64,7 @@ class pics {
 		// $this->all = $stmt->fetch();
 	}
 
-
+// ------------- DATABASE & MISC ---------------
 
 	private function db_connect() {
 		include('config/database.php');

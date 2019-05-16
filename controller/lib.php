@@ -1,6 +1,7 @@
 <?php
 
 function mail_is_correct($mail) {
+	echo $mail;
 	if (filter_var($mail, FILTER_VALIDATE_EMAIL) == False)
 		return False;
 	else
@@ -20,7 +21,7 @@ function display_warning($warning) {
 	<div class='box has-text-centered'>
 		<span class='icon has-text-warning'>
 			<i class='fas fa-exclamation-triangle'></i>
-		</span>", $warning,
+		</span>", $warning ,
 	"</div>";
 }
 
@@ -29,6 +30,6 @@ function display_success($warning) {
 	<div class='box has-text-centered'>
 		<span class='icon has-text-success'>
 			<i class='fas fa-check-square'></i>
-		</span>", $warning,
+		</span>", $warning ,
 	"</div>";
 }
