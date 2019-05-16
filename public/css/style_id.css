@@ -10,6 +10,7 @@ body {
 }
 .identification {
 	width: 400px;
+	/* width: 40vw; */
 	background-color: #ffffff;
 	box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
 	margin: 100px auto;

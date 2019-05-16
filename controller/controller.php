@@ -1,7 +1,9 @@
 <?php
 require_once('model/photo.php');
 require_once('model/user.php');
-require_once('model/posts.php');
+require_once('model/pics.php');
+require_once('model/likes.php');
+require_once('model/comments.php');
 
 function identification() {
 	require('identification.php');
@@ -23,6 +25,18 @@ function upload() {
 	require('upload.php');
 }
 
-function homepage() {
+function homepage($offset) {
+	if (!isset($offset))
+		$offset = 0;
 	require('homepage.php');
+}
+
+function pic_view($pic_id) {
+	if (!isset($pic_id)) {
+		$offset = 0;
+		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
+// require_once('homepage.php');
+	}
+	else
+		require_once('pic_view.php');
 }

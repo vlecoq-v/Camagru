@@ -32,6 +32,17 @@ class photo {
 		return $result;
 	}
 
+	public function connect($pic_id) {
+		$db = $this->db_connect();
+		$sql = "INSERT INTO pics(usr_id, pic_path)
+			VALUES(:usr_id, :pic_path)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':usr_id', $usr_id, PDO::PARAM_STR);
+		$stmt->bindValue(':pic_path', $pic_path, PDO::PARAM_STR);
+		$result = $stmt->execute();
+		return $result;
+	}
+
 // --------------- OTHERS ---------------
 
 	public function get_info() {

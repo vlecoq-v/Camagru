@@ -11,18 +11,23 @@
   </head>
   <body>
 	  <!-- nvabar ---------------------------------------------------------------------------------------->
-		<nav class="navbar is-primary is-bold is-spaced" role="navigation" aria-label="main navigation">
+		<nav class="navbar is-primary is-bold" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
-				<a href="index.php" class="navbar-item">
+				<a href="index.php?offset=0" class="navbar-item">
 					<img src="../public/img/filters/ramen-logo.png" alt="Turn your world into a funky manga one">
+				</a> 
+				<a role="button" class="navbar-burger" data-target="Mynavbar">
+					<span></span>
+					<span></span>
+					<span></span>
 				</a>
-				<button class="button navbar-burger">
+				<!-- <a role="button" class="button navbar-burger">
 					<span></span>
 					<span></span>
 					<span></span>
-				</button>
+				</a>  -->
 			</div>
-			<div class="navbar-menu">
+			<div class="navbar-menu" id="Mynavbar">
 				<a href="index.php?action=picture" class="navbar-item">
 					<span class="icon">
 						<i class="fas fa-camera"></i>
@@ -51,5 +56,6 @@
 				?>
 			</div>
 		</nav>
+		<script src="public/js/burger.js"></script>
 	</body>
 </html>

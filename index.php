@@ -5,44 +5,34 @@ session_start();
 require_once('view/header.php');
 require_once('controller/controller.php');
 include_once('controller/lib.php');
-// echo $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-
-// echo $user->get_info();
 
 if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
-	if ($_GET['action'] == 'identification') {
+	if ($_GET['action'] == 'identification')
 		identification();
-	}
-	else if ($_GET['action'] == 'log_out') {
+	else if ($_GET['action'] == 'log_out')
 		log_out();
-	}
-	else if ($_GET['action'] == 'my_account') {
+	else if ($_GET['action'] == 'my_account')
 		my_account();
-	}
-	else if ($_GET['action'] == 'download') {
+	else if ($_GET['action'] == 'download')
 		download();
-	}
-	else if ($_GET['action'] == 'upload') {
-		// require_once('view/Homepage.php');
+	else if ($_GET['action'] == 'upload')
 		upload();
-	}
-	else if ($_GET['action'] == 'picture') {
+	else if ($_GET['action'] == 'picture')
 		require_once('view/picture.php');
-	}
+	else if ($_GET['action'] == 'pic_view')
+		pic_view($_GET['pic_id']);
 	else 
 		display_warning("The page you are trying to find is not here!");
 }
-else if (isset($_GET['action']) AND $_SESSION['logged'] === 0) {
-	if ($_GET['action'] == 'identification') {
+else if (isset($_GET['action']) AND $_SESSION['logged'] == 0) {
+	if ($_GET['action'] == 'identification')
 		identification();
-	}
-	else if ($_GET['action'] == 'picture') {
+	else if ($_GET['action'] == 'picture')
 		identification();
-	}
+	else if ($_GET['action'] == 'pic_view')
+		identification();
 }
-else {
-	homepage();
-	// require_once('view/homepage.php');
-}
+else
+	homepage($_GET['offset']);
 
 require_once('view/footer.php');

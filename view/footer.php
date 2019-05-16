@@ -1,3 +1,4 @@
+	<body>	
 		<div class="wrapper_footer">
 			<footer class="my_footer">
 				<div class="content has-text-centered">
@@ -8,5 +9,6 @@
 				</div>
 			</footer>
 		</div>
+		<!-- <script src="public/js/burger.js"></script> -->
 	</body>
 </html>

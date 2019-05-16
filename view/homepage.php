@@ -8,7 +8,7 @@
 		<div class="columns" id="columns">
 			<!-- <div class="column"> -->
 			<?php
-				html_post();
+				all_posts($offset);
 			?>
 			<!-- </div>
 			<div class="column">
