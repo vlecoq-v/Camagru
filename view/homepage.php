@@ -20,3 +20,4 @@
 		</div>
 	</div>
 </section>
+<script src="public/js/ajax_likes.js"></script>

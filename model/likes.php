@@ -4,6 +4,42 @@ session_start();
 class likes {
 	public $count;
 
+	public function is_liked($pic_id) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM likes
+			WHERE usr_id = :usr_id
+			AND pic_id = :pic_id";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(":usr_id", $_SESSION['user']['usr_id']);
+		$stmt->bindValue(":pic_id", $pic_id);
+		$stmt->execute();
+		if ($stmt->rowcount() > 0)
+			return (True);
+		else
+			return False;
+	}
+
+	public function like($pic_id) {
+		$db = $this->db_connect();
+		$sql = "INSERT INTO likes(usr_id, pic_id)
+			VALUES(:usr_id, :pic_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':usr_id', $_SESSION['user']['usr_id']);
+		$stmt->bindValue(':pic_id', $pic_id);
+		return $stmt->execute();
+	}
+
+	public function unlike($pic_id) {
+		$db = $this->db_connect();
+		$sql = "DELETE FROM likes
+			WHERE usr_id = :usr_id
+			AND pic_id = :pic_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':usr_id', $_SESSION['user']['usr_id']);
+		$stmt->bindValue(':pic_id', $pic_id);
+		return $stmt->execute();
+	}
+
 	public function get_likes($pic_id) {
 		$db = $this->db_connect();
 		$sql = "SELECT COUNT(*) FROM likes WHERE pic_id = :pic_id";

@@ -25,7 +25,9 @@
 						</label>
 						<input type="text" name="username" placeholder="<?php echo $_SESSION['user']['username']?>" id="username_rgstr" required>
 						<input type="submit" value="update my username" id="submit_chg_username" name="submit_chg_username">
+						<!-- <button type="button" value="update my username" id="submit_chg_username"></button> -->
 					</form>
+						<!-- <button id="submit_chg_username"></button> -->
 					<form action="index.php?action=my_account" method="post">
 						<label for="password">
 							<i class="fas fa-lock"></i>
@@ -36,5 +38,6 @@
 				</div>
 			</div>
 		</section>
+		<!-- <script src="public/js/ajax_my_account.js"></script> -->
 	</body>
 </html>

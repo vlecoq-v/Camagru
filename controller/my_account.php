@@ -1,5 +1,4 @@
 <?php
-require_once("view/my_account.php");
 
 $user = new user();
 if (!$user->connect($_SESSION['user']['username'])) {
@@ -15,7 +14,6 @@ if ($_POST['submit_chg_mail']) {
 	}
 	if ($user->change_mail($_POST['mail'])) {
 		$user->update_cookie();
-		echo "<script type='text/javascript'> document.location = '/index.php?action=my_account'; </script>";		
 		display_success('your account information was updated!');
 	}
 }
@@ -25,18 +23,17 @@ else if ($_POST['submit_chg_username']) {
 	}
 	if ($user->change_username($_POST['username'])) {
 		$user->update_cookie();
-		// echo "<script type='text/javascript'> document.location = '/index.php?action=my_account'; </script>";		
 		display_success('your account information was updated!');
 	}
 }
 else if ($_POST['submit_chg_pwd']) {
 	if (!pwd_is_correct($_POST['pwd'])) {
-		echo $_POST['pwd'];
 		exit (display_warning("pwd is incorrect</br>"));
 	}
 	if ($user->change_pwd($_POST['pwd'])) {
 		$user->update_cookie();
-		echo "<script type='text/javascript'> document.location = '/index.php?action=my_account'; </script>";		
 		display_success('your account information was updated!');
 	}
 }
+
+require_once("view/my_account.php");

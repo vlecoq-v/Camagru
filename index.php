@@ -21,6 +21,8 @@ if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 		require_once('view/picture.php');
 	else if ($_GET['action'] == 'pic_view')
 		pic_view($_GET['pic_id']);
+	else if ($_GET['action'] == 'like')
+		like();
 	else 
 		display_warning("The page you are trying to find is not here!");
 }

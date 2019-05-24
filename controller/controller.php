@@ -40,3 +40,7 @@ function pic_view($pic_id) {
 	else
 		require_once('pic_view.php');
 }
+
+function like() {
+	require('like.php');
+}

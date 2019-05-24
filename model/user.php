@@ -51,6 +51,7 @@ class user {
 		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
 		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
 		$result = $stmt->execute();
+		$this->connect($this->info['username']);
 		return $result;
 	}
 
@@ -72,6 +73,7 @@ class user {
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
 		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
 		$result = $stmt->execute();
+		$this->connect($this->info['username']);
 		return $result;
 	}
 

@@ -6,19 +6,29 @@
 					Welcome '<'name'>'
 				</h1>
 			</div>
-			<div class="columns is-three-quarters" id ="columns">
-				<!-- <div class="containter"> -->
-				<div class="column media" id="div_video">
-					<!-- <div id="container"> -->
-						<video autoplay="true" id="videoElement"></video>
-					<!-- </div> -->
+			<article class='media post_media'>
+				<div class="column">
+					<div class="media-content" id="div_video">
+						<div id="videoWrapper">
+							<img src="public/img/filters/afro-hair.png" alt="" id="filter">
+							<video autoplay="true" id="videoElement"></video>
+						</div>
+						<nav class="level">
+							<a href="" class="level-item">
+								<button id="pic_button">Prendre une photo</button>
+							</a>
+						</nav>
+						<nav class="level">
+							<div class="scrollmenu">
+								<a href=""><img src="public/img/filters/afro-hair.png" alt="agro hair"></a>
+								<a href=""><img src="public/img/filters/radial.jpeg" alt="speed effect"></a>
+								<!-- <a href="#contact">Contact</a> -->
+								<!-- <a href="#about">About</a> -->
+							</div>
+						</nav>
+					</div>
 				</div>
-				
-				<div class="column buttons">
-					<button id="pic_button">Prendre une photo</button>
-				</div>
-				<a href="" id="download"></a>
-			</div>
+			</article>
 		</div>
 	</section>
 	<div id="overlay_back"></div>
