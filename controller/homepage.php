@@ -7,6 +7,8 @@ function all_posts($offset) {
 	// $posts->get_all();
 	$posts->get_6($offset);
 	foreach ($posts->all as $key => $post) {
+		$pic = new pics();
+		$pic->get_1($post['pic_id']);
 		if ($key % 3 == 0 AND $key !== 0) {
 			echo "
 			</div>
@@ -16,34 +18,35 @@ function all_posts($offset) {
 		$likes->get_likes($post['pic_id']);
 		$comm = new comm();
 		$comm->get_comm($post['pic_id']);
-		// if ($likes->is_liked($post['pic_id']))
-		// 	echo "MAMMMMEEEEN";
-		html_post($post['pic_path'], $likes->count, $comm->count, $post['pic_id'], $likes->is_liked($post['pic_id']));
+		html_post($pic->new, $likes->count, $comm->count, $post['pic_id'], $likes->is_liked($post['pic_id']));
 	}
 }
 
-function html_post($pic_path, $likes, $comm, $pic_id, $liked) {
+function html_post($pic, $likes, $comm, $pic_id, $liked) {
 	echo "
 	<div class='column post'>
 		<a href='index.php?action=pic_view&pic_id=" . $pic_id . "'>
 			<article class='media post_media'>
 				<div class='media-content'>	
 					<figure class='image post_image'>
-						<img src='" . $pic_path . "' class='myimg'>
+						<img src='" . $pic['pic_path'] . "' class='myimg'>
 					</figure>
-					<nav class='level is-mobile post_level'>";
+					<nav class='level is-mobile post_level'>
+						<a class='level-left'>
+							<a>By <strong>" . $pic['username'] . "</strong></a>
+						</a>";
 	if ($liked) {
 		echo "
 						<a class='level-item'>
-							<span class='icon is-small has-text-primary' id='" . $pic_id . "'><i class='fas fa-heart'></i></span>
+							<span class='icon is-small has-text-primary' id='" . $pic_id . "_like'><i class='fas fa-heart'></i></span>
 						</a>";}
 	else {
 		echo "
 						 <a class='level-item'>
-							<span class='icon is-small' id='" . $pic_id . "'><i class='fas fa-heart'></i></span>
+							<span class='icon is-small' id='" . $pic_id . "_like'><i class='fas fa-heart'></i></span>
 						</a>";}
 	echo "
-						<a class='level-item'>
+						<a class='level-item' id='" . $pic_id . "_like_nb'>
 							<span >" . $likes . "</span>
 						</a>
 						<a class='level-item'>

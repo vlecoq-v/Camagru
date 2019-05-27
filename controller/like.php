@@ -1,12 +1,18 @@
 <?php
 if ($_POST['id']) {
-	$id = $_POST['id'];
+	$id = preg_replace("/[^0-9]/", "", $_POST['id'] );
 	$like = new likes();
-	echo $id;
 	if ($like->is_liked($id)) {
 		$like->unlike($id);
-		echo "?like=false&nb+like=" . $like->get_likes($id);
+		$like->get_likes($id);
+		echo "false;";
 	}
+	else {
+		$like->like($id);
+		$like->get_likes($id);
+		echo "true;";
+	}
+	echo $like->count . ";";
 }
 else 
 	echo "no event to triger";

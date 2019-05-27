@@ -44,3 +44,7 @@ function pic_view($pic_id) {
 function like() {
 	require('like.php');
 }
+
+function filter_pic() {
+	require('filter_pic.php');
+}

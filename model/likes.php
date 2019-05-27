@@ -33,10 +33,13 @@ class likes {
 		$db = $this->db_connect();
 		$sql = "DELETE FROM likes
 			WHERE usr_id = :usr_id
-			AND pic_id = :pic_id)";
+			AND pic_id = :pic_id";
 		$stmt = $db->prepare($sql);
+		// echo $_SESSION['user']['usr_id'];
+		// echo $pic_id;
 		$stmt->bindValue(':usr_id', $_SESSION['user']['usr_id']);
 		$stmt->bindValue(':pic_id', $pic_id);
+		// echo $stmt->rowcount();
 		return $stmt->execute();
 	}
 

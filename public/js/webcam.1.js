@@ -1,15 +1,10 @@
 var video = document.getElementById("videoElement");
 var pic_button  = document.querySelector('#pic_button');
-// var canvas       = document.getElementById('canvas');
-// var canvas       = document.querySelector('#canvas');
-var photo        = document.querySelector('#photo');
-var width = document.getElementById('videoElement').clientWidth;
-var height = document.getElementById('videoElement').clientHeight;
 var download = document.getElementById('download');
 var overlay = document.getElementById("overlay");
 var another_button = document.getElementById("another_button");
-// var submit = document.getElementById("submit");
-var filter = document.getElementById("selected_filter");
+var request = new XMLHttpRequest();
+var canvas = document.getElementById("canvas");
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true })
@@ -21,18 +16,23 @@ if (navigator.mediaDevices.getUserMedia) {
     });
 }
 
-pic_button.addEventListener('click', function(ev){
-  // changeImage(takepicture());
-  takepicture(changeImage);
-ev.preventDefault();
-}, false);
+function changeImage() {
+  var canvas = document.getElementById("[object HTMLCanvasElement]");
+  var img = canvas.toDataURL("image/png");
 
-another_button.addEventListener('click', function(ev) {
-  leave_overlay();
-})
-// ------------------ Creates the canvas and displays it within overlay --------
+  var upload = document.getElementById('upload_hidden');
+  // canvas.style.display = "none";
+  upload.value = img;
+}
 
-function takepicture(callback) {
+function leave_overlay() {
+  // overlay.style.display = "none";
+  // overlay_back.style.display = "none";
+  document.location = '/index.php';
+}
+
+
+request.onreadystatechange = function takepicture(callback) {
   var canvas = document.getElementById("canvas");
   var overlay = document.getElementById("overlay");
   var overlay_back = document.getElementById("overlay_back");
@@ -45,38 +45,42 @@ function takepicture(callback) {
   // console.log(video.videoWidth);
   // console.log(video.offsetWidth);
   // console.log(video.height);
-  console.log(typeof filter);
-  console.log(filter);
   canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-  canvas.getContext('2d').drawImage(filter, width / 2, 0, width / 2, height / 2);
-  // imagecopymerge($canvas, $filter, 0, 0, 0, 0);
+  // imagecopymerge($canvas, $filter, 0, 0, 0, 0)
   canvas.id = canvas;
   overlay.style.display = "block";
   overlay_back.style.display = "block";
+  console.log(typeof callback);
   // another_button.style = submit.style;
+  // echo typeof(callback);
   if (typeof callback === "function")
     callback();
+  else
+    changeImage();
 };
+
+pic_button.addEventListener('click', function(ev) {
+  request.open('Get', 'index.php?action=filter_pic', true);
+  request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  request.send();
+  // changeImage(takepicture());
+  // takepicture(changeImage);
+ev.preventDefault();
+}, false);
+
+// ------------------ Creates the canvas and displays it within overlay --------
+
+
+
+another_button.addEventListener('click', function(ev) {
+  leave_overlay();
+})
 
 // ------------------ Sets the value of the upload form to the image --------
 
-function changeImage() {
-  var canvas = document.getElementById("[object HTMLCanvasElement]");
-  var img = canvas.toDataURL("image/png");
 
-  var upload = document.getElementById('upload_hidden');
-  // canvas.style.display = "none";
-  upload.value = img;
-  // window.alert("ok");
-  // window.alert(img);
-  // console.log(upload.value);
-}
 
-function leave_overlay() {
-  // overlay.style.display = "none";
-  // overlay_back.style.display = "none";
-  document.location = '/index.php';
-}
+
 
 // function download_pic() {
 //   var canvas = document.getElementById("canvas");

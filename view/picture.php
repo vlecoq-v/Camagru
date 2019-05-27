@@ -2,15 +2,18 @@
 	<section class="hero">
 		<div class="hero-body">
 			<div class="container">
-				<h1 class="title has-text-centered">
-					Welcome '<'name'>'
-				</h1>
+				<?php
+		if($_SESSION['logged']) {
+			echo "<h1 class='title has-text-centered'>
+					Welcome " . $_SESSION['user']['username'] . "
+				</h1>";}
+				?>
 			</div>
 			<article class='media post_media'>
 				<div class="column">
 					<div class="media-content" id="div_video">
 						<div id="videoWrapper">
-							<img src="public/img/filters/afro-hair.png" alt="" id="filter">
+							<!-- <img src="public/img/filters/afro-hair.png" alt="" id="selected_filter filter"> -->
 							<video autoplay="true" id="videoElement"></video>
 						</div>
 						<nav class="level">
@@ -20,7 +23,7 @@
 						</nav>
 						<nav class="level">
 							<div class="scrollmenu">
-								<a href=""><img src="public/img/filters/afro-hair.png" alt="agro hair"></a>
+								<a href=""><img src="public/img/filters/afro-hair.png" alt="agro hair" id="selected_filter"></a>
 								<a href=""><img src="public/img/filters/radial.jpeg" alt="speed effect"></a>
 								<!-- <a href="#contact">Contact</a> -->
 								<!-- <a href="#about">About</a> -->

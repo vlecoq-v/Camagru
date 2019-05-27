@@ -29,6 +29,19 @@ class pics {
 		}
 	}
 
+	public function get_author() {
+		$db = $this->db_connect();
+		$sql = "SELECT *
+			FROM pics
+			INNER JOIN users
+			WHERE pics.usr_id = users.usr_id
+			AND pics.usr_id = :usr_id";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(":usr_id", $this->new['usr_id']);
+		$stmt->execute();
+		$this->new['username'] = $stmt->fetch()['username'];
+	}
+
 	public function get_1($pic_id) {
 		$this->all = [];
 		$db = $this->db_connect();
@@ -37,6 +50,7 @@ class pics {
 		$stmt->bindValue(":pic_id", $pic_id);
 		$stmt->execute();
 		$this->new = $stmt->fetch();
+		$this->get_author();
 		if ($stmt->rowCount() === 0)
 			return FALSE;
 		else {
