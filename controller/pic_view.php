@@ -14,6 +14,14 @@ if ($_POST['submit_comment']) {
 $comm->get_all($pic_id);
 pic_info($pic_id, $comm->all, $like->count, $like->is_liked($pic_id));
 
+if ($_GET['mail'] == 1) {
+	comment_mail();
+}
+
+// print_r($_POST);
+
+// <---------------------- get and display info --------------------->
+
 function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
 	$pic = new pics();
 	if (!$pic->get_1($pic_id))
@@ -22,6 +30,23 @@ function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
 		html_pic($pic->new, $_SERVER['QUERY_STRING'], $comm_all, $like_count, $is_liked, $pic_id);
 	}
 }
+
+// <---------------------- send mail --------------------->
+
+function comment_mail() {
+	$pic = new pics();
+
+	// echo $_GET['pic_id'];
+	$pic->get_1($_GET['pic_id']);
+	print_r($pic->new);
+	$author_post = $pic->new['username'];
+	echo $author_post;
+	echo "ici";
+	// $author_post = 
+}
+
+// <---------------------- HTML generators --------------------->
+
 
 function html_comments($pic_id, $comm_all) {
 	$comm = new comm();
@@ -73,7 +98,7 @@ function html_pic($pic, $query_string, $comm_all, $like_count, $is_liked, $pic_i
 					<article class='media'>
 						<div class='media-content'>
 							" . html_comments($pic['pic_id'], $comm_all) ."
-							<form action='index.php?" . $query_string . "' method='post'>
+							<form action='index.php?" . $query_string . "&mail=1' method='post'>
 								<div class='field'>
 									<label class='label'>Comments!</label>
 									<div class='control'>
@@ -81,7 +106,7 @@ function html_pic($pic, $query_string, $comm_all, $like_count, $is_liked, $pic_i
 									</div>
 								</div>
 								<div class='control'>
-									<button class='button is-info' name='submit_comment' value='mamen' >Submit</button>
+									<button class='button is-info' name='submit_comment' value='OK'>Submit</button>
 								</div>
 							</form>
 						</div>

@@ -1,13 +1,15 @@
 <?php
-require_once('view/identification.php');
-
 if ($_POST['submit-login']) {
 	$user = new user();
-	if ($user->connect($_POST['username'], $_POST['pwd'])) {
-		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
+	if ($user->check_active($_POST['username'])) {
+		if ($user->connect($_POST['username'], $_POST['pwd'])) {
+			echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
+		}
+		else
+			display_warning('Wrong credentials');
 	}
-	else
-		echo display_warning('Wrong credentials');
+	else 
+		display_warning('You must verify your email before your connect');
 }
 else if ($_POST['submit-register']) {
 	$user = new user();
@@ -25,10 +27,30 @@ else if ($_POST['submit-register']) {
 		display_success('your account was created ! </br>
 			Please click on the activation link you received via mail to finalize your subscription');
 		// echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
-		$user->connect($_POST['username']);
+		send_mail();
+		// $user->connect($_POST['username']);
 	}
 	else {
 		display_warning("unexpected failure");
 	}
 }
-?>
+
+require_once('view/identification.php');
+
+function send_mail() {
+	$to = $_POST['mail'];
+	$subject = 'Signup | Verification'; 
+	$headers = 'From:noreply@camagru.com' . "\r\n";
+	$message = '
+	
+	Thanks for signing up!
+	Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+	
+	------------------------
+	Username: '.$_POST['username'].'
+	------------------------
+	
+	Please copy this link to activate your account:
+	localhost:4200/index.php?action=verify&username='.$_POST['username'].'&hash='.hash('whirlpool', $_POST['pwd']).'';
+	mail($to, $subject, $message, $headers);
+}

@@ -48,3 +48,7 @@ function like() {
 function filter_pic() {
 	require('filter_pic.php');
 }
+
+function verify() {
+	require('verify.php');
+}

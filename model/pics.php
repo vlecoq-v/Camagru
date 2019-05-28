@@ -38,8 +38,10 @@ class pics {
 			AND pics.usr_id = :usr_id";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(":usr_id", $this->new['usr_id']);
-		$stmt->execute();
-		$this->new['username'] = $stmt->fetch()['username'];
+		if ($stmt->execute())
+			$this->new['username'] = $stmt->fetch()['username'];
+		else
+			display_warning("author of picture was not found");
 	}
 
 	public function get_1($pic_id) {

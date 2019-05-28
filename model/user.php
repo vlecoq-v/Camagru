@@ -6,12 +6,15 @@ class user {
 
 // ------------- USER IDENTIFICATION ---------------
 
-	public function connect($username, $pwd = NULL) {
+	public function connect($username, $pwd = NULL, $hash = 0) {
 		$db = $this->db_connect();
 		if (!is_null($pwd)) {
 			$sql = "SELECT * FROM users WHERE username = :username AND pwd = :pwd";
 			$stmt = $db->prepare($sql);
-			$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
+			if (!$hash)
+				$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
+			else
+				$stmt->bindValue(':pwd', $pwd, PDO::PARAM_STR);
 		}
 		else {
 			$sql = "SELECT * FROM users WHERE username = :username";
@@ -41,6 +44,15 @@ class user {
 		return $result;
 	}
 
+	public function set_active() {
+		$db = $this->db_connect();
+		$sql = "UPDATE users
+		SET validated = 1
+		WHERE username = :username";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':username', $this->info['username'], PDO::PARAM_STR);
+		$stmt->execute();
+	}
 
 // ------------- CHG USER INFO ---------------
 
@@ -78,7 +90,7 @@ class user {
 	}
 
 
-// ------------- CREDENTIAL VERIFICATION ---------------
+// ------------- CREDENTIAL VERIFICATIONS ---------------
 
 	public function mail_exists($mail) {
 		$db = $this->db_connect();
@@ -88,7 +100,7 @@ class user {
 		$stmt->execute();
 		$stmt->fetch();
 		if ($stmt->rowcount() > 0)
-			return (True);
+			return True;
 		else
 			return False;
 	}
@@ -100,7 +112,21 @@ class user {
 		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 		$stmt->execute();
 		if ($stmt->rowcount() > 0)
-			return (True);
+			return True;
+		else
+			return False;
+	}
+
+	public function check_active($username) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users
+		WHERE username = :username
+		AND validated = 1";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->execute();
+		if ($stmt->rowCount() > 0)
+			return True;
 		else
 			return False;
 	}

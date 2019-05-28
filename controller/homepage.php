@@ -1,4 +1,9 @@
 <?php
+if ($_GET['message']) {
+	if ($_GET['message'] === "validated")
+		display_success("Congrats, your email was verified and you are now logged in");
+}
+
 function all_posts($offset) {
 
 	$posts = new pics();

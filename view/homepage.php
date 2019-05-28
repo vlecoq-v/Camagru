@@ -1,22 +1,17 @@
 <section class="hero">
 	<div class="hero-body">
 		<div class="container">
-			<h1 class="title has-text-centered">
-				Welcome '<'name'>'
-			</h1>
+	<?php
+	if($_SESSION['logged']) {
+		echo "<h1 class='title has-text-centered'>
+				Welcome " . $_SESSION['user']['username'] . "
+			</h1>";}
+	?>
 		</div>
 		<div class="columns" id="columns">
-			<!-- <div class="column"> -->
 			<?php
 				all_posts($offset);
 			?>
-			<!-- </div>
-			<div class="column">
-				
-			</div>
-			<div class="column">
-				
-			</div> -->
 		</div>
 	</div>
 </section>

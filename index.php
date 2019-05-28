@@ -12,7 +12,6 @@ else if ($_GET['action'] == 'filter_pic')
 
 require_once('view/header.php');
 
-
 if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 	if ($_GET['action'] == 'identification')
 		identification();
@@ -41,6 +40,8 @@ else if (isset($_GET['action']) AND $_SESSION['logged'] == 0) {
 		identification();
 	else if ($_GET['action'] == 'pic_view')
 		identification();
+	else if ($_GET['action'] == 'verify')
+		exit(verify());
 }
 else
 	homepage($_GET['offset']);

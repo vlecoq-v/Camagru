@@ -18,7 +18,7 @@ function pwd_is_correct($pwd) {
 
 function display_warning($warning) {
 	echo "
-	<div class='box has-text-centered'>
+	<div class='box has-text-centered' style='border-top: 2vh'>
 		<span class='icon has-text-warning'>
 			<i class='fas fa-exclamation-triangle'></i>
 		</span>", $warning ,
