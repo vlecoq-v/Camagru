@@ -35,6 +35,35 @@
 				</form>
 			</div>
 		</div>
+		<div class="forgotten has-text-centered">
+			<button class="button is-danger" id="btn_forgotten" onclick="forgotten_mail()">Forgotten you Password?</button>
+		</div>
+		<div id="overlay_back"></div>
+			<div id="overlay">
+				<div id="container_overlay">
+					<div class="card">
+						<div class="card-content">
+							<div class="media">
+								<form action="index.php?action=identification&message=mail_sent" method="post">
+									<div class="control">
+										<input class='input is-info' name='mail' type='text' placeholder='Please enter your email'>
+									</div>
+								</div>
+								<div class="media">
+									<div class="control">
+										<button id="OK_button" name="cancel_button" class="button is-danger">Cancel</button>
+									</div>
+									<div class="control">
+										<button id="cancel_button" name="OK_button" value="OK" class="button is-info">OK</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> 
 	<section>
+	<script src="Public/js/forgotten_mail.js"></script>
 	</body>
 </html>

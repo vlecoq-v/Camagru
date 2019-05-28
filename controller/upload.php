@@ -7,7 +7,7 @@ $user = new user;
 if (!$user->connect($_SESSION['user']['username'])) {
 	display_warning("we could not connect to your account");
 }
-// echo $_POST['upload'];
+echo $_POST['upload'];
 
 
 $path = $photo->decode($_POST['upload']);

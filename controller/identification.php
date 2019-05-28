@@ -26,16 +26,47 @@ else if ($_POST['submit-register']) {
 	else if ($user->create_new($_POST['mail'], $_POST['pwd'], $_POST['username'])) {
 		display_success('your account was created ! </br>
 			Please click on the activation link you received via mail to finalize your subscription');
-		// echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
 		send_mail();
-		// $user->connect($_POST['username']);
 	}
 	else {
 		display_warning("unexpected failure");
 	}
 }
 
+if ($_POST['OK_button']) {
+	$user = new user();
+
+	$new_pwd = randomPassword();
+	echo $new_pwd;
+	if ($test = $user->set_info($_POST['mail'])) {
+		$user->change_pwd($new_pwd);
+		print_r($user->info);
+		mail_chg_pwd($user->info, $new_pwd);
+	}
+	display_success("an email was sent to you with your new password");
+}
+
 require_once('view/identification.php');
+
+// <------------------- mail functions ------------------->
+
+function mail_chg_pwd($user, $new_pwd) {
+	$to = $user['mail'];
+	$subject = 'Change of password'; 
+	$headers = 'From:noreply@camagru.com' . "\r\n";
+	$message = '
+	We have changed your credentials according to your demand. Your new credentials are:
+	
+	
+	------------------------
+	Username: '.$user['username'].'
+	Password: '.$new_pwd.'
+	------------------------
+	
+	Please copy this link to activate your account:
+	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
+	mail($to, $subject, $message, $headers);
+}
 
 function send_mail() {
 	$to = $_POST['mail'];
@@ -51,6 +82,19 @@ function send_mail() {
 	------------------------
 	
 	Please copy this link to activate your account:
-	localhost:4200/index.php?action=verify&username='.$_POST['username'].'&hash='.hash('whirlpool', $_POST['pwd']).'';
+	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
 	mail($to, $subject, $message, $headers);
+}
+
+// <------------------- others ------------------->
+
+function randomPassword() {
+    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+    $pass = array(); //remember to declare $pass as an array
+    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    for ($i = 0; $i < 8; $i++) {
+        $n = rand(0, $alphaLength);
+        $pass[] = $alphabet[$n];
+    }
+    return implode($pass); //turn the array into a string
 }

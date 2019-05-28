@@ -38,25 +38,21 @@ function comment_mail() {
 
 	// echo $_GET['pic_id'];
 	$pic->get_1($_GET['pic_id']);
+	$pic->get_mail_author();
 	print_r($pic->new);
 	$author_post = $pic->new['username'];
 
-	$to = $_POST['mail'];
-	$subject = 'Signup | Verification'; 
+	$to = $pic->new['mail'];
+	$subject = 'Your post was commented'; 
 	$headers = 'From:noreply@camagru.com' . "\r\n";
 	$message = '
 	
-	Thanks for signing up!
-	Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+	One of your post was commented. 
 	
-	------------------------
-	Username: '.$_POST['username'].'
-	------------------------
-	
-	Please copy this link to activate your account:
-	localhost:4200/index.php?action=verify&username='.$_POST['username'].'&hash='.hash('whirlpool', $_POST['pwd']).'';
+	You can go to this link to discover the content of the comment:
+	http://localhost:4200/index.php?action=pic_view&pic_id=' . $pic->new['pic_id'];
 	mail($to, $subject, $message, $headers);
-
+	echo "mail sent";
 }
 
 // <---------------------- HTML generators --------------------->

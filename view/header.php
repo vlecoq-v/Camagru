@@ -21,11 +21,6 @@
 					<span></span>
 					<span></span>
 				</a>
-				<!-- <a role="button" class="button navbar-burger">
-					<span></span>
-					<span></span>
-					<span></span>
-				</a>  -->
 			</div>
 			<div class="navbar-menu" id="Mynavbar">
 				<a href="index.php?action=picture" class="navbar-item">

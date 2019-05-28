@@ -44,6 +44,21 @@ class pics {
 			display_warning("author of picture was not found");
 	}
 
+	public function get_mail_author() {
+		$db = $this->db_connect();
+		$sql = "SELECT *
+			FROM pics
+			INNER JOIN users
+			WHERE pics.usr_id = users.usr_id
+			AND pics.usr_id = :usr_id";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(":usr_id", $this->new['usr_id']);
+		if ($stmt->execute())
+			$this->new['mail'] = $stmt->fetch()['mail'];
+		else
+			display_warning("author of picture was not found");
+	}
+
 	public function get_1($pic_id) {
 		$this->all = [];
 		$db = $this->db_connect();
@@ -74,10 +89,8 @@ class pics {
 		$stmt->execute();
 		while ($this->new = $stmt->fetch()) {
 			$this->clean_array();
-			// unset($new);
 			array_push($this->all, $this->new);
 		}
-		// $this->all = $stmt->fetch();
 	}
 
 // ------------- DATABASE & MISC ---------------

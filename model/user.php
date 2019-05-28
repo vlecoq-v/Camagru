@@ -2,7 +2,7 @@
 session_start();
 
 class user {
-	private $info;
+	public $info;
 
 // ------------- USER IDENTIFICATION ---------------
 
@@ -89,7 +89,6 @@ class user {
 		return $result;
 	}
 
-
 // ------------- CREDENTIAL VERIFICATIONS ---------------
 
 	public function mail_exists($mail) {
@@ -133,6 +132,19 @@ class user {
 
 // --------------- OTHERS ---------------
 
+	public function set_info($mail) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users WHERE mail = :mail";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(":mail", $mail);
+		$stmt->execute();
+		$this->info = $stmt->fetch();
+		if (is_null($this->info))
+			return (null);
+		else
+			return True;
+	}
+
 	public function get_info() {
 		return($this->info);
 	}
@@ -154,7 +166,7 @@ class user {
 			unset($this->info[$i]);
 			$i += 1;
 		}
-		$_SESSION['user'] = $this->get_info();
+		$_SESSION['user'] = $this->info;
 		unset($_SESSION['user']['pwd']);
 	}
 }
