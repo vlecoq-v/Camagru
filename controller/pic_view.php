@@ -40,9 +40,23 @@ function comment_mail() {
 	$pic->get_1($_GET['pic_id']);
 	print_r($pic->new);
 	$author_post = $pic->new['username'];
-	echo $author_post;
-	echo "ici";
-	// $author_post = 
+
+	$to = $_POST['mail'];
+	$subject = 'Signup | Verification'; 
+	$headers = 'From:noreply@camagru.com' . "\r\n";
+	$message = '
+	
+	Thanks for signing up!
+	Your account has been created, you can login with the following credentials after you have activated your account by pressing the url below.
+	
+	------------------------
+	Username: '.$_POST['username'].'
+	------------------------
+	
+	Please copy this link to activate your account:
+	localhost:4200/index.php?action=verify&username='.$_POST['username'].'&hash='.hash('whirlpool', $_POST['pwd']).'';
+	mail($to, $subject, $message, $headers);
+
 }
 
 // <---------------------- HTML generators --------------------->
