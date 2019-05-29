@@ -65,7 +65,8 @@ function mail_chg_pwd($user, $new_pwd) {
 	
 	Please copy this link to activate your account:
 	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
-	mail($to, $subject, $message, $headers);
+	$mail = mail($to, $subject, $message, $headers);
+	echo var_dump($mail);
 }
 
 function send_mail() {

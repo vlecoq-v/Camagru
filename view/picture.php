@@ -22,26 +22,29 @@
 						<div class="columns is-centered">
 							<div class="column is-half">
 								<nav class="level">
-									<a href="" class="level-item">
+									<a href="#" class="level-item">
 										<button id="pic_button" class="button is-dark">Take a picture</button>
 									</a>
-									<a ref="" class="level-item" id="erase_button_div" style="display: none">
+									<a ref="#" class="level-item" id="erase_button_div" style="display: none">
 										<button id="erase_button" class="button is-dark">Erase preview</button>
 									</a>
+									<a href="#" class="level-item" style="display:none" id="upload_button_div">
+										<button id="upload_button" class="button is-dark">Upload picture</button>
+									</a>
 								</nav>
-								<nav class="level">
+								<!-- <nav class="level">
 									<a href="#" class="level-item">
 										<form action="upload.php" method="post" enctype="multipart/form-data">
 											<input type="file" name="fileToUpload" id="fileToUpload" class="button is-light">
 											<input type="submit" value="Upload Image" name="submit" class="button is-light">
 										</form>
 									</a>
-								</nav>
+								</nav> -->
 								<nav class="level">
 									<div class="scrollmenu">
 									<form action="">
-										<a src="#"><input type="radio" id="radio_1" name="filters" checked><img src="public/img/filters/afro-hair.png" alt="agro hair" id="selected_filter"></a>
-										<a src="#"><input type="radio" id="radio_2" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect"></a>
+										<a src="#" id="radio_1"><input type="radio" name="filters" checked><img src="public/img/filters/new_afro.png" alt="afro hair" id="selected_filter"></a>
+										<a src="#" id="radio_2"><input type="radio" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect"></a>
 										<!-- <a href="#contact">Contact</a> -->
 										<!-- <a href="#about">About</a> -->
 									</form>
@@ -54,13 +57,10 @@
 			</article>
 		</div>
 	</section>
-	<div id="overlay_back"></div>
+	<!-- <div id="overlay_back"></div>
 	<div id="overlay">
 		<div id="container_overlay">
 			<span>
-				<!-- <figure class="image is-squared"> -->
-				<!-- <canvas id="canvas"></canvas> -->
-				<!-- </figure> -->
 				<form action="index.php?action=upload" method="post" enctype="multipart/form-data" id="uploadForm">
 						<input type="hidden" value="filter" name="filter" id=upload_filter>
 						<input type="hidden" value="mamen" name="upload" id="upload_hidden">
@@ -69,5 +69,5 @@
 				<button id="another_button">Take another picture</button>
 			</span>
 		</div>
-	</div> 
+	</div>  -->
 	<script src="public/js/webcam.js"></script>

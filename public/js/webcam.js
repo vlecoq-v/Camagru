@@ -6,9 +6,11 @@ var height = document.getElementById('videoElement').clientHeight;
 var download = document.getElementById('download');
 var overlay = document.getElementById("overlay");
 var another_button = document.getElementById("another_button");
-var filter = document.getElementById("selected_filter");
 var videoWrapper = document.getElementById("videoWrapper");
 var canvas = document.createElement("canvas");
+var upload_button = document.getElementById("upload_button");
+var filter = document.getElementById("radio_1");
+
 
 if (navigator.mediaDevices.getUserMedia) {
   navigator.mediaDevices.getUserMedia({ video: true })
@@ -21,25 +23,52 @@ if (navigator.mediaDevices.getUserMedia) {
 }
 
 pic_button.addEventListener('click', function(ev){
-  // changeImage(takepicture());
-  takepicture(changeImage);
-  console.log(video.style.display);
-  console.log(video.parentNode);
+  // takepicture(changeImage);
+  takepicture();
 
   ev.preventDefault();
 }, false);
 
-erase_button.addEventListener('click', function(ev) {
+upload_button.addEventListener('click', function(ev) {
+
+  // ---FRONT BUTTONS ---
+
   canvas.style.display = 'none';
-  video.style.display = 'run-in';
+  video.style.display = 'inline-flex';
 
   erase_button_div.style.display = 'none';
+  upload_button_div.style.display = 'none';
 
+    // --- SEND TO BACK ---
+
+    var request = new XMLHttpRequest();
+
+    // console.log(filter);
+    // console.log(filter.childNodes[1]);
+    var filter_src = filter.childNodes[1].src;
+    var img = canvas.toDataURL("image/png");
+    // console.log(filter_src);
+    // console.log(img);
+  
+    request.open('Post', 'index.php?action=upload', true);
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.send("filter=".concat(filter_src).concat("&img=".concat(img)));
+    setTimeout(function(){ return(false); }, 5000);
+    // console.log("event heard");
 });
 
-another_button.addEventListener('click', function(ev) {
-  leave_overlay();
-})
+erase_button.addEventListener('click', function(ev) {
+
+  // ---FRONT BUTTONS ---
+
+  canvas.style.display = 'none';
+  video.style.display = 'inline-flex';
+
+  erase_button_div.style.display = 'none';
+  upload_button_div.style.display = 'none';
+
+
+});
 
 // ------------------ Creates the canvas and displays it within overlay --------
 
@@ -49,32 +78,19 @@ function takepicture(callback) {
   var overlay_back = document.getElementById("overlay_back");
   var filter = document.getElementById("selected_filter");
   var erase_button_div = document.getElementById("erase_button_div");
+  var upload_button_div = document.getElementById("upload_button_div");
 
-  rect = video.getBoundingClientRect();
-  console.log(rect);
-  width = rect.width;
   canvas.style.top = 0;
-  // canvas.style.left = video.offsetLeft;
-  // width = video.offsetWidth;
+  width = video.offsetWidth;
   height = video.offsetHeight;
   canvas.width = width;
   canvas.height = height;
-  // video.parentNode.removeChild(video);
   video.style.display = "none";
-  // erase_button_div.style.display = "inline";
-  console.log(erase_button_div);
-  // console.log(video.videoWidth);
-  // console.log(video.offsetWidth);
-  // console.log(video.height);
-  // console.log(typeof filter);
-  // console.log(filter);
+  erase_button_div.style.display = "flex";
+  upload_button_div.style.display = "flex";
+  // console.log(erase_button_div);
   canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-  // canvas.getContext('2d').drawImage(filter, width / 2, 0, width / 2, height / 2);
-  // imagecopymerge($canvas, $filter, 0, 0, 0, 0);
   canvas.id = canvas;
-  // overlay.style.display = "block";
-  // overlay_back.style.display = "block";
-  // another_button.style = submit.style;
   videoWrapper.appendChild(canvas);
   canvas.style.display = "inline-flex";
   if (typeof callback === "function")
@@ -83,49 +99,10 @@ function takepicture(callback) {
 
 // ------------------ Sets the value of the upload form to the image --------
 
-function changeImage() {
-  var canvas = document.getElementById("[object HTMLCanvasElement]");
-  var img = canvas.toDataURL("image/png");
-
-  var upload = document.getElementById('upload_hidden');
-  
-  console.log(rect);
-  // canvas.style.display = "none";
-  upload.value = img;
-  // window.alert("ok");
-  // window.alert(img);
-  // console.log(upload.value);
-}
-
-function leave_overlay() {
-  // overlay.style.display = "none";
-  // overlay_back.style.display = "none";
-  // document.location = 'index.php?action=picture';
-}
-
-// function download_pic() {
-//   var canvas = document.getElementById("canvas");
-//   var img    = canvas.toDataURL("image/png");
-//   var main_div = document.getElementById("columns");
-
-//   console.log(canvas);
-//   canvas = canvas.Value;
-//   console.log(canvas);
-//   console.log(img);
-// }
-
-// function uploadImage() {
-//   var canvas = document.getElementById("canvas");
+// function changeImage() {
+//   var canvas = document.getElementById("[object HTMLCanvasElement]");
 //   var img = canvas.toDataURL("image/png");
-//   var form = document.getElementById('uploadForm');
-//   var formData = new FormData(form);
-//   var xhr = new XMLHttpRequest();
-
-//   console.log("sent");
-//   console.log(img);
-//   xhr.open('POST', 'upload.php', true);
-//   xhr.setRequestHeader('Content-Type', 'application/upload');
-//   xhr.send(img);
-//   console.log(xhr.responseText);
+//   var upload = document.getElementById('upload_hidden');
+  
+//   upload.value = img;
 // }
-

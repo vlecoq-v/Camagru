@@ -14,7 +14,7 @@
 		<nav class="navbar is-primary is-bold" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
 				<a href="index.php?offset=0" class="navbar-item">
-					<img src="../public/img/filters/ramen-logo.png" alt="Turn your world into a funky manga one">
+					<img src="public/img/filters/ramen-logo.png" alt="Turn your world into a funky manga one">
 				</a> 
 				<a role="button" class="navbar-burger" data-target="Mynavbar">
 					<span></span>
