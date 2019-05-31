@@ -1,18 +1,22 @@
 <?php
+$user = new user();
+
 if ($_POST['submit-login']) {
-	$user = new user();
-	if ($user->check_active($_POST['username'])) {
-		if ($user->connect($_POST['username'], $_POST['pwd'])) {
+	if ($user->connect($_POST['username'], $_POST['pwd'])) {
+		if ($user->check_active($_POST['username'])) {
 			echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
 		}
-		else
-			display_warning('Wrong credentials');
+		else {
+			$_SESSION['logged'] = 0;
+			unset($_SESSION['user']);
+			display_warning('You must verify your email before your connect');
+		}
 	}
-	else 
-		display_warning('You must verify your email before your connect');
+	else {
+		display_warning('Wrong credentials');
+	}
 }
 else if ($_POST['submit-register']) {
-	$user = new user();
 	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username'])) {
 		exit (display_warning("mail or username already exists"));
 	}
@@ -34,8 +38,6 @@ else if ($_POST['submit-register']) {
 }
 
 if ($_POST['OK_button']) {
-	$user = new user();
-
 	$new_pwd = randomPassword();
 	echo $new_pwd;
 	if ($test = $user->set_info($_POST['mail'])) {

@@ -26,7 +26,7 @@ function upload() {
 }
 
 function homepage($offset) {
-	if (!isset($offset))
+	if (!isset($offset) || $offset < 0)
 		$offset = 0;
 	require('homepage.php');
 }

@@ -89,7 +89,22 @@ class user {
 		return $result;
 	}
 
-// ------------- CREDENTIAL VERIFICATIONS ---------------
+	public function change_notif() {
+		if ($this->info['email_notif'] == 1)
+			$notif = 0;
+		else
+			$notif = 1;
+		$db = $this->db_connect();
+		$sql = "UPDATE users SET email_notif = (:email_notif) WHERE `usr_id` = (:usr_id)";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':email_notif', $notif, PDO::PARAM_STR);
+		$stmt->bindValue(':usr_id', $this->info['usr_id']);
+		$result = $stmt->execute();
+		$this->connect($this->info['username']);
+		return $result;
+	}
+
+// ------------- INFORMATION VERIFICATIONS ---------------
 
 	public function mail_exists($mail) {
 		$db = $this->db_connect();
@@ -121,6 +136,20 @@ class user {
 		$sql = "SELECT * FROM users
 		WHERE username = :username
 		AND validated = 1";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->execute();
+		if ($stmt->rowCount() > 0)
+			return True;
+		else
+			return False;
+	}
+
+	public function check_notif($username) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users
+		WHERE username = :username
+		AND email_notif = 1";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
 		$stmt->execute();

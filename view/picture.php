@@ -16,6 +16,8 @@
 				<div class="column">
 					<div class="media-content" id="div_video">
 						<div id="videoWrapper">
+							<img src="public/img/filters/new_afro.png" alt="" id="preview">
+							<img src="" alt="" id="preview">
 							<video autoplay="true" id="videoElement"></video>
 							<!-- <canvas id="canvas" style="position: absolute"></canvas> -->
 						</div>
@@ -43,8 +45,9 @@
 								<nav class="level">
 									<div class="scrollmenu">
 									<form action="">
-										<a src="#" id="radio_1"><input type="radio" name="filters" checked><img src="public/img/filters/new_afro.png" alt="afro hair" id="selected_filter"></a>
-										<a src="#" id="radio_2"><input type="radio" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect"></a>
+										<a src="#" id="radio_1"><input type="radio" name="filters" checked><img src="public/img/filters/new_afro.png" alt="afro hair" id="radio_1_img"></a>
+										<a src="#" id="radio_2"><input type="radio" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect" id="radio_2_img"></a>
+										<a src="#" id="radio_3"><input type="radio" name="filters"><img src="public/img/filters/sayan-hair.png" alt="speed effect" id="radio_3_img"></a>
 										<!-- <a href="#contact">Contact</a> -->
 										<!-- <a href="#about">About</a> -->
 									</form>

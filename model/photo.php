@@ -6,7 +6,7 @@ class photo {
 
 // ------------- PHOTO REGISTRATION ---------------
 
-	public function decode($image_encoded, $filter) {
+	public function decode($image_encoded, $filter, $dst_x, $dst_y) {
 		$image_encoded = str_replace(' ', '+', $image_encoded);
 		$folderPath = "public/img/upload/";
 		$image_parts = explode(";base64,", $image_encoded);
@@ -30,31 +30,35 @@ class photo {
 		return ($file);
 	}
 
-	public function merge($img, $filter) {
-		$dst_x = 0;
-		$dst_y = 0;
-		$image_size = getimagesize($filter);
-		$src_w = $image_size[0];
-		$src_h = $image_size[1];
+	public function merge($img, $filter, $dst_x, $dst_y) {
+		$filter_size = getimagesize($filter);
+		$src_w = $filter_size[0];
+		$src_h = $filter_size[1];
+
+		$img_size = getimagesize($img);
+		$img_w = $img_size[0];
+		$img_h = $img_size[1];
+
+		$dest_image = imagecreatetruecolor($img_w, $img_h);
+		imagesavealpha($dest_image, true);
+		// $img = imagecreatetruecolor($img_w, $img_h);
+		$trans_background = imagecolorallocatealpha($dest_image, 0, 0, 0, 127);
+            //fill the image with a transparent background
+		imagefill($dest_image, 0, 0, $trans_background);
+
 
 		// $img = imagecreatetruecolor ($w, $h);
-		// echo $src_w;
-		// echo $src_h;
-		// var_dump(getimagesize($img));
 		
 		$filter = imagecreatefrompng($filter);
 		$img = imagecreatefrompng($img);
 
-		// var_dump($img);
-		// echo $img;
-		// echo "<img src='" . $img . "'>";
-		// echo "<img src='" . $filter . "'>";
-		// echo "<img src='" . "public/img/filters/ramen-logo.png" . "'";
-		// echo getcwd();
-		// echo $filter;
-		imagecopymerge($img, $filter, $dst_x, $dst_y, 0, 0, $src_w, $src_h, 30);
-		// echo "<img src='" . $img . "'>";
-		return $img;
+		imagecopy($dest_image, $img, 0, 0, 0, 0, $img_w, $img_h);
+		imagecopy($dest_image, $filter, 0, 0, 0, 0, $src_w, $src_h);
+
+		imagedestroy($filter);
+		imagedestroy($img);
+		// imagecopymerge($img, $filter, $dst_x, $dst_y, 0, 0, $src_w, $src_h, 30);
+		return $dest_image;
 	}
 
 	public function register($usr_id, $pic_path) {

@@ -37,7 +37,18 @@
 					</form>
 				</div>
 			</div>
+			<div class="forgotten has-text-centered">
+				<form action="index.php?action=my_account" method="post">
+				<?php 
+					if($_SESSION['user']['email_notif'] == 1)
+						echo "<button class='button is-danger' id='btn_forgotten' name='button_notif' value='deactivate'>Deactivate email notifications</button>";
+					else 
+						echo "<button class='button is-primary' id='btn_forgotten' name='button_notif' value='activate'>Activate email notifications</button>";
+				?>
+				</form>
+			</div>
+			<div class="forgotten has-text-centered">
+			</div>
 		</section>
-		<!-- <script src="public/js/ajax_my_account.js"></script> -->
 	</body>
 </html>

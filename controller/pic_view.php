@@ -4,7 +4,6 @@ $like = new likes();
 
 $pic_id = $_GET['pic_id'];
 $like->get_likes($pic_id);
-// echo $like->is_liked($pic_id);
 
 if ($_POST['submit_comment']) {
 	if (!$comm->new_comm($pic_id, $_SESSION['user']['usr_id'], $_POST['comment']))
@@ -17,8 +16,6 @@ pic_info($pic_id, $comm->all, $like->count, $like->is_liked($pic_id));
 if ($_GET['mail'] == 1) {
 	comment_mail();
 }
-
-// print_r($_POST);
 
 // <---------------------- get and display info --------------------->
 
@@ -35,13 +32,15 @@ function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
 
 function comment_mail() {
 	$pic = new pics();
+	$user = new user();
 
-	// echo $_GET['pic_id'];
 	$pic->get_1($_GET['pic_id']);
 	$pic->get_mail_author();
-	print_r($pic->new);
 	$author_post = $pic->new['username'];
 
+	if (!$user->check_notif($author_post)) {
+		return ;
+	}
 	$to = $pic->new['mail'];
 	$subject = 'Your post was commented'; 
 	$headers = 'From:noreply@camagru.com' . "\r\n";
@@ -52,7 +51,6 @@ function comment_mail() {
 	You can go to this link to discover the content of the comment:
 	http://localhost:4200/index.php?action=pic_view&pic_id=' . $pic->new['pic_id'];
 	mail($to, $subject, $message, $headers);
-	echo "mail sent";
 }
 
 // <---------------------- HTML generators --------------------->

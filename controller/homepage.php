@@ -5,7 +5,6 @@ if ($_GET['message']) {
 }
 
 function all_posts($offset) {
-
 	$posts = new pics();
 
 	$posts->get_count();
@@ -25,9 +24,14 @@ function all_posts($offset) {
 		$comm->get_comm($post['pic_id']);
 		html_post($pic->new, $likes->count, $comm->count, $post['pic_id'], $likes->is_liked($post['pic_id']));
 	}
+	html_pagination($offset);
 }
 
 function html_post($pic, $likes, $comm, $pic_id, $liked) {
+	if (!$_SESSION['logged'])
+		$href = "href=index.php?action=identification";
+	else
+		$href = "#";
 	echo "
 	<div class='column post'>
 		<a href='index.php?action=pic_view&pic_id=" . $pic_id . "'>
@@ -47,14 +51,14 @@ function html_post($pic, $likes, $comm, $pic_id, $liked) {
 						</a>";}
 	else {
 		echo "
-						 <a class='level-item'>
+						 <a " . $href . " class='level-item'>
 							<span class='icon is-small' id='" . $pic_id . "_like'><i class='fas fa-heart'></i></span>
 						</a>";}
 	echo "
 						<a class='level-item' id='" . $pic_id . "_like_nb'>
 							<span >" . $likes . "</span>
 						</a>
-						<a class='level-item'>
+						<a " . $href . " class='level-item'>
 							<span class='icon is-small'><i class='fas fa-comment'></i></span>
 						</a>
 						<a class='level-item'>
@@ -65,6 +69,36 @@ function html_post($pic, $likes, $comm, $pic_id, $liked) {
 			</article>
 		</a>
 	</div>";
+}
+
+function html_pagination($offset) {
+	$posts = new pics();
+
+	$posts->get_count();
+	$count = $posts->count / 6;
+	$offset_minus = $offset - 1;
+	$offset_plus = $offset + 1;
+	$i = 0;
+
+	echo "
+	</div>
+	<section class='section'>
+		<nav class='pagination is-centered' role='navigation' aria-label='pagination'>
+			<a href='index.php?offset=" . $offset_minus . "' class='pagination-previous'>Previous</a>
+			<a href='index.php?offset=" . $offset_plus . "' class='pagination-next'>Next page</a>
+			<ul class='pagination-list'>";
+	while ($i < $count) {
+		$current = $i + 1;
+		if ($offset == $i)
+			echo "<li><a href='index.php?offset=" . $i . "' class='pagination-link is-current' aria-label='Goto page 1' aria-current='page'>" . $current ."</a></li>";
+		else
+			echo "<li><a href='index.php?offset=" . $i . "' class='pagination-link' aria-label='Goto page 1'>" . $current ."</a></li>";
+		$i++;
+	}
+	echo
+			"</ul>
+		</nav>
+	</section>";
 }
 
 require_once('view/homepage.php');

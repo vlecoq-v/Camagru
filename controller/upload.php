@@ -13,9 +13,9 @@ $user = new user;
 // }
 // echo $_POST['upload'];
 
-$path = $photo->decode($_POST['img'], $_POST['filter']);
+$path = $photo->decode($_POST['img'], $_POST['filter'], 0, 0);
 // echo $_SESSION['user']['usr_id'];
-// $photo->register($_SESSION['user']['usr_id'], $path);
+$photo->register($_SESSION['user']['usr_id'], $path);
 // echo $path;
 // echo "<img src='" . $path . "'>";
 
