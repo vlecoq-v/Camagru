@@ -43,17 +43,13 @@ class comm {
 // ------------- SETTERS ---------------
 
 	public function new_comm($pic_id, $user_id, $comm) {
-		// echo $pic_id;
-		// echo $user_id;
-		// echo $comm;
-
 		$db = $this->db_connect();
 		$sql = "INSERT INTO comm(user_id, comm, pic_id)
 			VALUES (:user_id, :comm, :pic_id)";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(":pic_id", $pic_id);
 		$stmt->bindValue(":user_id", $user_id);
-		$stmt->bindValue(":comm", $db->quote($comm), PDO::PARAM_STR);
+		$stmt->bindValue(":comm", htmlentities($comm));
 		if ($stmt->execute())
 			return True;
 		return False;

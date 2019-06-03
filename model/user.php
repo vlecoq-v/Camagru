@@ -37,9 +37,9 @@ class user {
 		$sql = "INSERT INTO users(username, mail, pwd)
 			VALUES(:username, :mail, :pwd)";
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		$stmt->bindValue(':mail', htmlentities($mail), PDO::PARAM_STR);
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
-		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->bindValue(':username', htmlentities($username), PDO::PARAM_STR);
 		$result = $stmt->execute();
 		return $result;
 	}
@@ -60,7 +60,7 @@ class user {
 		$db = $this->db_connect();
 		$sql = "UPDATE users SET mail = (:mail) WHERE `usr_id` = (:usr_id)";
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':mail', $mail, PDO::PARAM_STR);
+		$stmt->bindValue(':mail', htmlentities($mail), PDO::PARAM_STR);
 		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
 		$result = $stmt->execute();
 		$this->connect($this->info['username']);
@@ -71,7 +71,7 @@ class user {
 		$db = $this->db_connect();
 		$sql = "UPDATE users SET username = (:username) WHERE `usr_id` = (:usr_id)";
 		$stmt = $db->prepare($sql);
-		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->bindValue(':username', htmlentities($username), PDO::PARAM_STR);
 		$stmt->bindValue(':usr_id', $this->info['usr_id'], PDO::PARAM_STR);
 		$result = $stmt->execute();
 		$this->connect($username);
