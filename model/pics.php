@@ -75,6 +75,21 @@ class pics {
 		}
 	}
 
+	public function get_users() {
+		$this->all = [];
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM pics 
+			WHERE usr_id = :usr_id
+			ORDER BY pic_id DESC";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':usr_id', $_SESSION['user']['usr_id']);
+		$stmt->execute();
+		while ($this->new = $stmt->fetch()) {
+			$this->clean_array();
+			array_push($this->all, $this->new);
+		}
+	}
+
 	public function get_6($offset) {
 		$this->all = [];
 		$db = $this->db_connect();
@@ -93,7 +108,23 @@ class pics {
 		}
 	}
 
+// ------------- DELETE ---------------
+
+	public function delete($pic_id, $author_id) {
+		$db = $this->db_connect();
+		if ($this->new['usr_id'] != $author_id)
+			return False;
+		$sql = "DELETE FROM pics WHERE pic_id = :pic_id";
+		$stmt = $db->prepare($sql);
+		print_r($pic_id);
+		$stmt->bindValue(":pic_id", $pic_id);
+		echo $stmt->execute();
+		return True;
+	}
+
+
 // ------------- DATABASE & MISC ---------------
+
 
 	private function db_connect() {
 		include('config/database.php');

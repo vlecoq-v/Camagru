@@ -13,64 +13,64 @@
 				?>
 			</div>
 			<article class='media post_media'>
-				<div class="column">
-					<div class="media-content" id="div_video">
-						<div id="videoWrapper">
-							<img src="public/img/filters/new_afro.png" alt="" id="preview">
-							<img src="" alt="" id="preview">
-							<video autoplay="true" id="videoElement"></video>
-							<!-- <canvas id="canvas" style="position: absolute"></canvas> -->
-						</div>
-						<div class="columns is-centered">
-							<div class="column is-half">
-								<nav class="level">
-									<a href="#" class="level-item">
-										<button id="pic_button" class="button is-dark">Take a picture</button>
-									</a>
-									<a ref="#" class="level-item" id="erase_button_div" style="display: none">
-										<button id="erase_button" class="button is-dark">Erase preview</button>
-									</a>
-									<a href="#" class="level-item" style="display:none" id="upload_button_div">
-										<button id="upload_button" class="button is-dark">Upload picture</button>
-									</a>
-								</nav>
-								<!-- <nav class="level">
-									<a href="#" class="level-item">
-										<form action="upload.php" method="post" enctype="multipart/form-data">
-											<input type="file" name="fileToUpload" id="fileToUpload" class="button is-light">
-											<input type="submit" value="Upload Image" name="submit" class="button is-light">
-										</form>
-									</a>
-								</nav> -->
-								<nav class="level">
-									<div class="scrollmenu">
-									<form action="">
-										<a src="#" id="radio_1"><input type="radio" name="filters" checked><img src="public/img/filters/new_afro.png" alt="afro hair" id="radio_1_img"></a>
-										<a src="#" id="radio_2"><input type="radio" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect" id="radio_2_img"></a>
-										<a src="#" id="radio_3"><input type="radio" name="filters"><img src="public/img/filters/sayan-hair.png" alt="speed effect" id="radio_3_img"></a>
-										<!-- <a href="#contact">Contact</a> -->
-										<!-- <a href="#about">About</a> -->
-									</form>
-									</div>
-								</nav>
+				<div class="columns">
+					<div class="column" style="height: 100%; margin-top: 0; margin-bottom: 0;">
+						<div class="media-content" id="div_video">
+							<div id="videoWrapper">
+								<img src="public/img/filters/new_afro.png" alt="" id="preview">
+								<!-- <img src="" alt="" id="preview"> -->
+								<video autoplay="true" id="videoElement"></video>
+								<!-- <canvas id="canvas" style="position: absolute"></canvas> -->
+							</div>
+							<div class="columns is-centered" style='min-height: 500px;'>
+								<div class="column">
+									<nav class="level">
+										<a href="#" class="level-item">
+											<button id="pic_button" class="button is-dark">Take a picture</button>
+										</a>
+										<a ref="#" class="level-item" id="erase_button_div" style="display: none">
+											<button id="erase_button" class="button is-dark">Erase preview</button>
+										</a>
+										<a href="#" class="level-item" style="display:none" id="upload_button_div">
+											<button id="upload_button" class="button is-dark">Upload picture</button>
+										</a>
+									</nav>
+									<nav class="level">
+										<a href="#" class="level-item" style="display:none" id="upload_file_div">
+											<form action="'index.php?action=upload'">
+												<input type="file" id="upload_file" name="upload_file">
+											</form>
+										</a>
+										<a href="#" class="level-item">
+											<button id="upload_file_button" class="button is-dark">Upload a picture</button>
+										</a>
+									</nav>
+									<nav class="level">
+										<div class="scrollmenu">
+											<form action="">
+												<a src="#" id="radio_1"><input type="radio" name="filters" checked><img src="public/img/filters/new_afro.png" alt="afro hair" id="radio_1_img"></a>
+												<a src="#" id="radio_2"><input type="radio" name="filters"><img src="public/img/filters/wanted.png" alt="speed effect" id="radio_2_img"></a>
+												<a src="#" id="radio_3"><input type="radio" name="filters"><img src="public/img/filters/sayan-hair.png" alt="speed effect" id="radio_3_img"></a>
+											</form>
+										</div>
+									</nav>
+									<nav class="level">
+										<div class="scrollmenu">
+											<?php post_user(); ?>
+										</div>
+									</nav>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- <div class="column is-one-fifth is-offset-one-fifth previous_pics">
+						<div class="scrollmenu has-text-centered" style="overflow: auto;">
+							<?php ?>
+						</div>
+					</div> -->
 				</div>
 			</article>
 		</div>
 	</section>
-	<!-- <div id="overlay_back"></div>
-	<div id="overlay">
-		<div id="container_overlay">
-			<span>
-				<form action="index.php?action=upload" method="post" enctype="multipart/form-data" id="uploadForm">
-						<input type="hidden" value="filter" name="filter" id=upload_filter>
-						<input type="hidden" value="mamen" name="upload" id="upload_hidden">
-						<input type="submit" value="Upload Image" name="submit" id="submit">
-				</form>
-				<button id="another_button">Take another picture</button>
-			</span>
-		</div>
-	</div>  -->
 	<script src="public/js/webcam.js"></script>
+	<script src="public/js/delete_pic.js"></script>

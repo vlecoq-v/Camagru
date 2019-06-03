@@ -52,3 +52,12 @@ function filter_pic() {
 function verify() {
 	require('verify.php');
 }
+
+function picture() {
+	require('picture.php');
+	require_once('view/picture.php');
+}
+
+function delete_pic($id) {
+	require_once('delete_pic.php');
+}

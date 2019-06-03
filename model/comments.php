@@ -53,7 +53,7 @@ class comm {
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(":pic_id", $pic_id);
 		$stmt->bindValue(":user_id", $user_id);
-		$stmt->bindValue(":comm", $comm);
+		$stmt->bindValue(":comm", $db->quote($comm), PDO::PARAM_STR);
 		if ($stmt->execute())
 			return True;
 		return False;

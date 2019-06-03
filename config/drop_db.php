@@ -4,7 +4,7 @@ include_once('database.php');
 try {
 	$db = new PDO ($DB_DSN, $DB_USER, $DB_PASSWORD);
 
-	$sql = "DROP DATABASE camagru1";
+	$sql = "DROP DATABASE camagru";
 	echo ($db->exec($sql));
 }
 catch (PDOException $e) {

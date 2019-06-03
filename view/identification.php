@@ -11,7 +11,7 @@
 					<label for="password">
 						<i class="fas fa-lock"></i>
 					</label>
-					<input type="password" name="pwd" placeholder="password" id="pwd" required>
+					<input type="password" name="pwd" placeholder="password" id="pwd">
 					<input type="submit" value="Login" id="submit-login" name="submit-login">
 					<!-- <input type="text" name="test" placeholder="TEST HTML injection"> -->
 				</form>

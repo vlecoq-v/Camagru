@@ -35,11 +35,8 @@ class likes {
 			WHERE usr_id = :usr_id
 			AND pic_id = :pic_id";
 		$stmt = $db->prepare($sql);
-		// echo $_SESSION['user']['usr_id'];
-		// echo $pic_id;
 		$stmt->bindValue(':usr_id', $_SESSION['user']['usr_id']);
 		$stmt->bindValue(':pic_id', $pic_id);
-		// echo $stmt->rowcount();
 		return $stmt->execute();
 	}
 
@@ -50,7 +47,6 @@ class likes {
 		$stmt->bindValue(":pic_id", $pic_id);
 		$stmt->execute();
 		$this->count = $stmt->fetch()[0];
-		// $this->count = $stmt->rowcount();
 	}
 
 	private function db_connect() {

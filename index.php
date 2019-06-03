@@ -24,9 +24,11 @@ if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 	else if ($_GET['action'] == 'upload')
 		upload();
 	else if ($_GET['action'] == 'picture')
-		require_once('view/picture.php');
+		picture();
 	else if ($_GET['action'] == 'pic_view')
 		pic_view($_GET['pic_id']);
+	else if ($_GET['action'] == 'delete_pic')
+		delete_pic($_POST['id']);
 	// else if ($_GET['action'] == 'like') {
 	// 	like();
 	// }
