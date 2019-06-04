@@ -12,6 +12,6 @@ function post_user () {
 
 function html_old_posts($post) {
 	echo "
-	<img src='" . $post['pic_path'] . "' id='pic_src_gallery" . $post['pic_id'] . "'>
+	<img src='" . $post['pic_path'] . "' id='pic_src_gallery;" . $post['pic_id'] . "'>
 	";
 }

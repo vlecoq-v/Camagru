@@ -18,15 +18,13 @@ class photo {
 		$file = $folderPath . $fileName;
 		file_put_contents($file, $image_decoded);
 
-		 $img = $this->merge($file, $filter);
+		 $img = $this->merge($file, $filter, 0, 0);
 		// header('content/type: image/png');
 		unlink($file);
-		// echo $file;
 		imagepng($img, $file);
 		imagedestroy($img);
-		//  file_put_contents($file, $img);		
-		echo $file;
-		echo "<img src='" . $file . "'>";
+		// echo $file;
+		// echo "<img src='" . $file . "'>";
 		return ($file);
 	}
 

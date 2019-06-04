@@ -12,8 +12,6 @@ request.onreadystatechange = function() {
 			}
 			else 
 				like.className = "icon is-small has-text-primary";
-    } else {
-			console.log("fail");
     }
   }
 };
@@ -26,5 +24,4 @@ document.addEventListener('click', function(event) {
 		id = event.target.parentNode.id;
 		request.send("id=".concat(id));
 	}
-	console.log("event heard");
 });

@@ -17,9 +17,11 @@
 					<div class="column" style="height: 100%; margin-top: 0; margin-bottom: 0;">
 						<div class="media-content" id="div_video">
 							<div id="videoWrapper">
-								<img src="public/img/filters/new_afro.png" alt="" id="preview">
 								<!-- <img src="" alt="" id="preview"> -->
-								<video autoplay="true" id="videoElement"></video>
+								<div id="close_wrapper" style="display: inline-block;">
+									<img src="public/img/filters/new_afro.png" alt="" id="preview" draggable="true">
+									<video autoplay="true" id="videoElement"></video>
+								</div>
 								<!-- <canvas id="canvas" style="position: absolute"></canvas> -->
 							</div>
 							<div class="columns is-centered" style='min-height: 500px;'>
@@ -55,7 +57,7 @@
 										</div>
 									</nav>
 									<nav class="level">
-										<div class="scrollmenu">
+										<div class="scrollmenu" id="my_gallery">
 											<?php post_user(); ?>
 										</div>
 									</nav>
