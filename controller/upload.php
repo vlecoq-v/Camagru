@@ -11,8 +11,9 @@ $user = new user;
 //     echo "Only PNG images are allowed!";
 //     exit;
 // }
-
-$path = $photo->decode($_POST['img'], $_POST['filter'], $POST['filterX'], $_POST['filterY']);
+// echo $POST['filterX'];
+// print_r($_POST);
+$path = $photo->decode($_POST['img'], $_POST['filter'], $_POST['filterX'], $_POST['filterY']);
 $photo->register($_SESSION['user']['usr_id'], $path);
 add_gallery();
 
@@ -22,8 +23,8 @@ function add_gallery() {
 
     $pic->get_users();
     // print_r($pic->new);
-    // print_r($pic->all[0]);
-    echo "<a id='new_pic'>" . $pic->all[0]['pic_id'] . "</a>";
+    echo $pic->all[0]['pic_id'] . ";";
+    echo $pic->all[0]['pic_path'] . ";";
     // echo "add_my_gallery(" . $pic->all[0]['pic_id'] . ")";
     // echo "<script src='public/js/webcam.js'> add_my_gallery(" . $pic->all['pic_id'] . ") </script>";
 }

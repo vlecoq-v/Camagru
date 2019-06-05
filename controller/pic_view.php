@@ -17,6 +17,7 @@ if ($_GET['mail'] == 1) {
 	comment_mail();
 }
 
+
 // <---------------------- get and display info --------------------->
 
 function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
@@ -27,6 +28,7 @@ function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
 		html_pic($pic->new, $_SERVER['QUERY_STRING'], $comm_all, $like_count, $is_liked, $pic_id);
 	}
 }
+
 
 // <---------------------- send mail --------------------->
 

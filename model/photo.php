@@ -13,7 +13,7 @@ class photo {
 		$image_decoded = base64_decode($image_parts[1]);
 		$fileName = uniqid() . '.png';
 		$filter = explode("4200/", $filter)[1];
-		
+		// echo $filterX;
 
 		$path = $folderPath . $fileName;
 		file_put_contents($path, $image_decoded);
@@ -49,7 +49,7 @@ class photo {
 		
 		$filter = imagecreatefrompng($filter);
 		$img = imagecreatefrompng($img);
-
+		// echo $filterX;
 		imagecopy($dest_image, $img, 0, 0, 0, 0, $img_w, $img_h);
 		imagecopy($dest_image, $filter, $filterX, $filterY, 0, 0, $src_w, $src_h);
 

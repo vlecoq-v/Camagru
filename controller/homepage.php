@@ -33,7 +33,7 @@ function all_posts($offset) {
 
 function html_post($pic, $likes, $comm, $pic_id, $liked) {
 	if (!$_SESSION['logged'])
-		$href = "href=index.php?action=identification";
+		$href = "href=index.php?action=identification&msg=login";
 	else
 		$href = "#";
 	echo "

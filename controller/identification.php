@@ -12,29 +12,24 @@ if ($_POST['submit-login']) {
 			display_warning('You must verify your email before your connect');
 		}
 	}
-	else {
+	else
 		display_warning('Wrong credentials');
-	}
 }
 else if ($_POST['submit-register']) {
-	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username'])) {
+	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username']))
 		exit (display_warning("mail or username already exists"));
-	}
-	else if (!mail_is_correct($_POST['mail'])) {
+	else if (!mail_is_correct($_POST['mail']))
 		display_warning("mail is incorrect</br>");
-	}
-	else if (!pwd_is_correct($_POST['pwd'])) {
+	else if (!pwd_is_correct($_POST['pwd']))
 		exit (display_warning("pwd should contain at least 1 normal case letter,
 			1 upper case letter and 1 number</br>"));
-	}
 	else if ($user->create_new($_POST['mail'], $_POST['pwd'], $_POST['username'])) {
 		display_success('your account was created ! </br>
 			Please click on the activation link you received via mail to finalize your subscription');
 		send_mail();
 	}
-	else {
+	else
 		display_warning("unexpected failure");
-	}
 }
 
 if ($_POST['OK_button']) {
