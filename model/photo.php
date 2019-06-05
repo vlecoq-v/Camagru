@@ -6,7 +6,7 @@ class photo {
 
 // ------------- PHOTO REGISTRATION ---------------
 
-	public function decode($image_encoded, $filter, $dst_x, $dst_y) {
+	public function decode($image_encoded, $filter, $filterX, $filterY) {
 		$image_encoded = str_replace(' ', '+', $image_encoded);
 		$folderPath = "public/img/upload/";
 		$image_parts = explode(";base64,", $image_encoded);
@@ -15,20 +15,20 @@ class photo {
 		$filter = explode("4200/", $filter)[1];
 		
 
-		$file = $folderPath . $fileName;
-		file_put_contents($file, $image_decoded);
+		$path = $folderPath . $fileName;
+		file_put_contents($path, $image_decoded);
 
-		 $img = $this->merge($file, $filter, 0, 0);
+		 $img = $this->merge($path, $filter, $filterX, $filterY);
 		// header('content/type: image/png');
-		unlink($file);
-		imagepng($img, $file);
+		unlink($path);
+		imagepng($img, $path);
 		imagedestroy($img);
-		// echo $file;
-		// echo "<img src='" . $file . "'>";
-		return ($file);
+		// echo $path;
+		// echo "<img src='" . $path . "'>";
+		return ($path);
 	}
 
-	public function merge($img, $filter, $dst_x, $dst_y) {
+	public function merge($img, $filter, $filterX, $filterY) {
 		$filter_size = getimagesize($filter);
 		$src_w = $filter_size[0];
 		$src_h = $filter_size[1];
@@ -51,7 +51,7 @@ class photo {
 		$img = imagecreatefrompng($img);
 
 		imagecopy($dest_image, $img, 0, 0, 0, 0, $img_w, $img_h);
-		imagecopy($dest_image, $filter, 0, 0, 0, 0, $src_w, $src_h);
+		imagecopy($dest_image, $filter, $filterX, $filterY, 0, 0, $src_w, $src_h);
 
 		imagedestroy($filter);
 		imagedestroy($img);

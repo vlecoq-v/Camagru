@@ -8,6 +8,10 @@ function all_posts($offset) {
 	$posts = new pics();
 
 	$posts->get_count();
+	if ($posts->count == 0) {
+		echo "<h1> no post at this moment</h1>";
+		return ;
+	}
 	// $posts->get_all();
 	$posts->get_6($offset);
 	foreach ($posts->all as $key => $post) {

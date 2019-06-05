@@ -12,7 +12,7 @@ $user = new user;
 //     exit;
 // }
 
-$path = $photo->decode($_POST['img'], $_POST['filter'], 0, 0);
+$path = $photo->decode($_POST['img'], $_POST['filter'], $POST['filterX'], $_POST['filterY']);
 $photo->register($_SESSION['user']['usr_id'], $path);
 add_gallery();
 

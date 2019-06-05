@@ -17,7 +17,7 @@ request.onreadystatechange = function() {
 };
 
 document.addEventListener('click', function(event) {
-	request.open('Post', 'index.php?action=like&pseudoparam=' + new Date().getTime(), true);
+	request.open('Post', 'index.php?action=like', true);
 	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 	className = event.target.className;
 	if (className.includes("heart")) {

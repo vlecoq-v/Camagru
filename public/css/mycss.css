@@ -21,6 +21,11 @@ html, body {
 	text-align: center;
 }
 
+#close_wrapper {
+	max-width: 640;
+	max-height: 480;
+}
+
 #preview {
 	position: absolute;
 	z-index: 2;

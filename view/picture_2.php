@@ -18,8 +18,9 @@
 						<div class="media-content" id="div_video">
 							<div id="videoWrapper">
 								<!-- <img src="" alt="" id="preview"> -->
-								<div id="close_wrapper" style="display: inline-block;">
-									<img src="public/img/filters/new_afro.png" alt="" id="preview" draggable="true">
+								<div id="close_wrapper">
+									<!-- <img src="public/img/filters/new_afro.png" alt="" id="preview" draggable="true"> -->
+									<canvas id="canvas"></canvas>
 									<video autoplay="true" id="videoElement"></video>
 								</div>
 								<!-- <canvas id="canvas" style="position: absolute"></canvas> -->
@@ -74,5 +75,5 @@
 			</article>
 		</div>
 	</section>
-	<script src="public/js/webcam.js"></script>
+	<script src="public/js/webcam_2.js"></script>
 	<script src="public/js/delete_pic.js"></script>

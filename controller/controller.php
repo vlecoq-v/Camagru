@@ -55,7 +55,7 @@ function verify() {
 
 function picture() {
 	require('picture.php');
-	require_once('view/picture.php');
+	require_once('view/picture_2.php');
 }
 
 function delete_pic($id) {
