@@ -2,60 +2,48 @@ html, body {
     width  : 100%;
     height : 100%;
 }
-
 #container {
 	margin: 0px auto;
 	width: 500px;
 	height: 375px;
 	border: 10px solid;
 }
-
 #videoElement {
 	position: relative;
 	z-index:1;
 }
-
-
 #videoWrapper {
 	position: relative;
 	text-align: center;
 }
-
 #close_wrapper {
 	max-width: 640;
 	max-height: 480;
 }
-
 #preview {
 	position: absolute;
 	z-index: 2;
 }
-
 footer {
 	bottom: 0px;
 }
-
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
 		'Open Sans', 'Helvetica Neue', sans-serif;
-	/* color: white; */
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
   }
-
 .hero {
 	flex: 1;
 }
-
 .wrapper_footer {
 	flex-shrink: 0;
 	padding-bottom: 1.5vh;
 	padding-top: 1.5vh;
 	background-color: hsl(0, 0%, 98%);
 }
-
 #container_overlay {
 	position: absolute;
     margin: auto;
@@ -66,7 +54,6 @@ body {
 	width: 80%;
 	height: 60%;
 }
-
 #overlay_back {
     position   : absolute;
     top        : 0;
@@ -79,7 +66,6 @@ body {
     z-index    : 5;
     display    : none;
 }
-
 #overlay {
     position : absolute;
     top      : 0;
@@ -89,30 +75,21 @@ body {
     z-index  : 10;
     display  : none;
 }
-
 .post_media{
-	/* background-color:hsl(0, 0%, 96%); */
-	/* box-shadow: 20 0 9px 0 rgba(0, 0, 0, 0.3); */
 	box-shadow: 0 1rem 3rem rgba(0,0,0,.2);
 	padding: 1vw;
-	/* border-radius: 1vh; */
 }
-
 .Myimg {
 	border-radius: 3vh;
 }
-
 .post_level {
 	padding-top: 1vh;
 	padding-bottom: 1vh;
 }
-
 div.scrollmenu {
-  /* background-color: #333; */
   overflow: auto;
   white-space: nowrap;
 }
-
 div.scrollmenu a {
   display: inline-block;
   color: white;
@@ -120,36 +97,9 @@ div.scrollmenu a {
   padding: 14px;
   text-decoration: none;
 }
-
 div.scrollmenu img{
-	/* height: 20%; */
 	width: 20%;
 }
-
 div.scrollmenu a:hover {
   background-color: #777;
 }
-
-
-
-/* .myimg { */
-	/* object-fit: cover;
-	width: 30vw;
-	height: auto; */
-	/* display: none; */
-	/* height: 70%;
-	width: auto; */
-/* } */
-
-/* .wrapper {
-	position: relative;
-	padding-top: 56.25%;
-  }
-
-.myimg {
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: auto;
-  } */

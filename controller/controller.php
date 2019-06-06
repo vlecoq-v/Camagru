@@ -35,7 +35,6 @@ function pic_view($pic_id) {
 	if (!isset($pic_id)) {
 		$offset = 0;
 		echo "<script type='text/javascript'> document.location = '/index.php'; </script>";
-// require_once('homepage.php');
 	}
 	else
 		require_once('pic_view.php');
@@ -55,7 +54,7 @@ function verify() {
 
 function picture() {
 	require('picture.php');
-	require_once('view/picture_2.php');
+	require_once('view/picture.php');
 }
 
 function delete_pic($id) {

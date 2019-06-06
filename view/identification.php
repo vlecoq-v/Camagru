@@ -13,7 +13,6 @@
 					</label>
 					<input type="password" name="pwd" placeholder="password" id="pwd">
 					<input type="submit" value="Login" id="submit-login" name="submit-login">
-					<!-- <input type="text" name="test" placeholder="TEST HTML injection"> -->
 				</form>
 			</div>
 			<div class="register">

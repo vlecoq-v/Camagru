@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le :  mer. 05 juin 2019 à 01:15
+-- Généré le :  jeu. 06 juin 2019 à 03:43
 -- Version du serveur :  5.6.43
 -- Version de PHP :  5.6.40
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données :  `camagru`
+-- Base de données :  `camagru1`
 --
 
 -- --------------------------------------------------------
@@ -82,7 +82,8 @@ INSERT INTO `likes` (`usr_id`, `pic_id`) VALUES
 (27, 44),
 (27, 55),
 (27, 54),
-(28, 64);
+(28, 64),
+(27, 68);
 
 -- --------------------------------------------------------
 
@@ -109,12 +110,8 @@ INSERT INTO `pics` (`pic_path`, `pic_id`, `usr_id`) VALUES
 ('public/img/upload/5ce7e67980a4b.png', 55, 27),
 ('public/img/upload/5ced0df82682a.png', 62, 27),
 ('public/img/upload/5cf12c486c117.png', 64, 27),
-('public/img/upload/5cf6352282b02.png', 96, 27),
-('public/img/upload/5cf638c4f1289.png', 106, 27),
-('public/img/upload/5cf63d5a9ff05.png', 113, 27),
-('public/img/upload/5cf65ac5850e2.png', 130, 27),
-('public/img/upload/5cf67101d1feb.png', 131, 27),
-('public/img/upload/5cf68cc84c67c.png', 132, 27);
+('public/img/upload/5cf52f2ab5df9.png', 68, 27),
+('public/img/upload/5cf53ea722b12.png', 75, 27);
 
 -- --------------------------------------------------------
 
@@ -145,8 +142,7 @@ INSERT INTO `users` (`usr_id`, `mail`, `pwd`, `username`, `usr_pic`, `validated`
 (37, 'vasfd@gmail.com', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', 'vasdf', NULL, 0, 1),
 (41, 'vlecoq-v@student.42.fr', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', 'vlecoq-v', NULL, 1, 0),
 (42, 'morgani@student.42.fr', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', 'morgani', NULL, 0, 1),
-(43, 'qwer@gmail.com', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', 'qwer', NULL, 0, 1),
-(44, 'sdfgh@gmail.com', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', '<strong>mamen</strong>', NULL, 1, 1);
+(43, 'qwer@gmail.com', 'def4d8fc452e67bd9c8b8075f239b1cb683b2b83e47e0fe1d0534e38f7c459c012bc8b90c976ba40a7114f58497d4657fa10125ba7ac7c3a5d63acc2d76a2815', 'qwer', NULL, 0, 1);
 
 --
 -- Index pour les tables déchargées
@@ -196,13 +192,13 @@ ALTER TABLE `comm`
 -- AUTO_INCREMENT pour la table `pics`
 --
 ALTER TABLE `pics`
-  MODIFY `pic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=133;
+  MODIFY `pic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `usr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- Contraintes pour les tables déchargées

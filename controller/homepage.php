@@ -12,7 +12,6 @@ function all_posts($offset) {
 		echo "<h1> no post at this moment</h1>";
 		return ;
 	}
-	// $posts->get_all();
 	$posts->get_6($offset);
 	foreach ($posts->all as $key => $post) {
 		$pic = new pics();

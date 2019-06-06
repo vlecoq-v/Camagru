@@ -1,211 +1,267 @@
-var video = document.getElementById("videoElement");
-var photo = document.querySelector('#photo');
-var download = document.getElementById('download');
-var overlay = document.getElementById("overlay");
-var videoWrapper = document.getElementById("videoWrapper");
-var canvas = document.createElement("canvas");
-var upload_button = document.getElementById("upload_button");
-var preview = document.getElementById("preview");
+(function() {
+	var canvas = document.getElementById('canvas');
+		ctx = canvas.getContext('2d');
+		video = document.getElementById('videoElement');
+		vendorUrl = window.URL || window.webkitURL;
+		wrapper = document.getElementById('close_wrapper');
+		width = 0;
+		height = 0;
+		streaming_vid = 0;
+		streaming_filter = 0;
+		src_upload = 0;
+		
+	
+	navigator.getMedia =	navigator.getUserMedia ||
+							navigator.webkitGetUserMedia ||
+							navigator.mowGetUserMedia;
 
-if (navigator.mediaDevices.getUserMedia) {
-  navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function (stream) {
-      video.srcObject = stream;
-    })
-    .catch(function (err0r) {
-      console.log("Something went wrong with the webcam userMedia authorisation!");
-    });
-}
+	navigator.getMedia({
+		video: true,
+		audio: false
+	}, function (stream) {
+		video.srcObject = stream;
+		video.play();
+	}, function (error) {
+		console.log("an error occured");
+		console.log(error.code);
+	});
 
-// ------------------ draw the upload file -----------------
-var upload_file_button = document.getElementById('upload_file_button');
-var upload_file = document.getElementById('upload_file');
+	video.addEventListener('play', streamVideo, false);
+	video.style.display = "none";
 
-upload_file.addEventListener('change', function (ev) {
-  var img = new Image();
-  img.onerror = function() {
-    alert("Only images and gifs are allowed for upload");
-  }
-  img.onload = draw;
-  img.src = URL.createObjectURL(this.files[0]);
-}, false);
+	function streamVideo() {
+		streaming_vid = setInterval(function () {
+			draw(video, ctx, width, height);
+			streamFilter();
+		}, 1000 / 30);
+	}
 
-function draw() {
-  width = this.width;
-  height = this.height;
-  canvas.style.top = 0;
-  canvas.width = width;
-  canvas.height = height;
-  video.style.display = "none";
-  erase_button_div.style.display = "flex";
-  upload_button_div.style.display = "flex";
-  canvas.getContext('2d').drawImage(this, 0,0);
-  canvas.style.width = "100%";
-  videoWrapper.appendChild(canvas);
-  canvas.style.display = "inline-flex";
-}
+	function draw(video, ctx, width, height) {
+		if (wrapper.clientWidth <= 750) {
+			width = 310;
+			height = 310 * 2/3;
+		}
+		else {
+			width = 640;
+			height = 480;
+		}
+		canvas.width = width;
+		canvas.height = height;
 
-upload_file_button.addEventListener('click', function(ev) {
-  upload_file.click();
-}, false);
-
-// ------------------ Get the selected filter and display it --------
-var radio_1 = document.getElementById('radio_1');
-var radio_2 = document.getElementById('radio_2');
-var radio_3 = document.getElementById('radio_3');
-
-radio_1.addEventListener('click', function(ev) {
-  preview.src = radio_1.childNodes[1].src;
-  radio_1.childNodes[0].checked = true;
-}, false);
-
-radio_2.addEventListener('click', function(ev) {
-  preview.src = radio_2.childNodes[1].src;
-  radio_2.childNodes[0].checked = true;
-  width = wrapper.offsetWidth / 3.3;
-  preview.width = width;
-}, false);
-
-radio_3.addEventListener('click', function(ev) {
-  preview.src = radio_3.childNodes[1].src;
-  radio_3.childNodes[0].checked = true;
-}, false);
+		ctx.drawImage(video, 0, 0, width, height);
+	}
 
 
+// ********************** FILTER MOVING **********************
+	var	preview = new Image();
+		isDraggable = false;
+		currentX = 0;
+		currentY = 0;
+	
+	currentX = 200;
+	currentY = 100;
+	preview.src = "public/img/filters/new_afro.png";
+
+	function streamFilter () {
+		mouseEvents();
+		drawFilter();
+	}
+
+	preview_width = 0;
+	preview_height = 0;
+
+	function drawFilter() {
+		// calcul du ration hwight width du filtre
+		ratio = preview.height / preview.width;
+		preview_width = canvas.width * 2 / 5;
+		preview_height = preview_width * ratio;
+		
+		ctx.drawImage(preview, currentX-(preview.width/2), currentY-(preview.height/2), preview_width, preview_height);
+	}
+
+	function mouseEvents() {
+		canvas.onmousedown = function(e) {
+			isDraggable = true;
+		};
+	
+		canvas.onmouseup = function(e) {
+			isDraggable = false;
+		  };
+	
+		canvas.onmouseout = function(e) {
+			isDraggable = false;
+		};
+	
+		canvas.onmousemove = function(e) {
+			if (isDraggable) {
+				if (canvas.width >= 500) {
+					currentX = e.pageX - this.offsetLeft;
+					currentY = e.pageY - this.offsetTop - 220;
+				}
+				else {
+					currentX = e.pageX - this.offsetLeft;
+					currentY = e.pageY - this.offsetTop - 170;
+				}
+			   
+			 }
+		  };
+	}
+
+
+// ********************** FILTER MOVING **********************
+	var pic_button = document.getElementById('pic_button');
+
+	pic_button.addEventListener('click', function(ev){
+		erase_button_div.style.display = 'flex';
+		upload_button_div.style.display = 'flex';
+		clearInterval(streaming_vid);
+		clearInterval(streaming_filter);
+	}, false);
+  
+  erase_button.addEventListener('click', function(ev) {
+    // ---FRONT BUTTONS ---
+    erase_button_div.style.display = 'none';
+	upload_button_div.style.display = 'none';
+	
+	streamVideo();
+	if (src_upload) {
+		clearInterval(streaming_upload);
+		src_upload = null;
+	}
+  });
+  
+
+// ********************** CHANGE FILTERS **********************
+	var radio_1 = document.getElementById('radio_1');
+	var radio_2 = document.getElementById('radio_2');
+	var radio_3 = document.getElementById('radio_3');
+	var radio_4 = document.getElementById('radio_4');
+	var radio_5 = document.getElementById('radio_5');
 
 
 
-var wrapper = document.getElementById('close_wrapper');
+	radio_1.addEventListener('click', function(ev) {
+	preview.src = radio_1.childNodes[1].src;
+	radio_1.childNodes[0].checked = true;
+	}, false);
 
-// ------------------ change its position on the image and records it --------
+	radio_2.addEventListener('click', function(ev) {
+	preview.style.width = "10px";
+	preview.src = radio_2.childNodes[1].src;
+	}, false);
 
-var moving = false;
-preview.addEventListener("click", initialClick, false);
-// initialClick();
-// var rect_video = wrapper.getBoundingClientRect();
-// var rect_filter = preview.getBoundingClientRect();
-// var limit_right = wrapper.offsetWidth + rect_video.top;
+	radio_3.addEventListener('click', function(ev) {
+	preview.src = radio_3.childNodes[1].src;
+	radio_3.childNodes[0].checked = true;
+	}, false);
 
-function move(e){
-  // e.relatedTarget = document.getElementById('close_wrapper');
-  wrapper = e.target;
-  console.log(e.EventTarget);
- var newX = e.clientX - 100;
- var newY = e.clientY - 350;
+	radio_4.addEventListener('click', function(ev) {
+		preview.src = radio_4.childNodes[1].src;
+		radio_4.childNodes[0].checked = true;
+		}, false);
+	
+	radio_5.addEventListener('click', function(ev) {
+		preview.src = radio_5.childNodes[1].src;
+		radio_5.childNodes[0].checked = true;
+		}, false);
 
- moveAt(event.pageX, event.pageY);
+// ********************** UPLOAD TO SERVER TO MERGE IMAGES **********************
+	upload_button.addEventListener('click', function(ev) {
 
- function moveAt(pageX, pageY) {
-  image.style.left = pageX - image.offsetWidth / 2 + 'px';
-  image.style.top = pageY - image.offsetHeight / 2 + 'px';
-}
+		// ---FRONT BUTTONS ---
+		erase_button_div.style.display = 'none';
+		upload_button_div.style.display = 'none';
 
- image.style.left = newX + "px";
- image.style.top = newY + "px";
-}
+		// --- SEND TO BACK ---
+		streamVideo();
+		var request = new XMLHttpRequest();
+
+		if (src_upload) {
+			draw(src_upload, ctx, width, height);
+			clearInterval(streaming_upload);
+			src_upload = null;
+		}
+		else 
+			draw(video, ctx, width, height);
+		
+		var img = canvas.toDataURL("image/png");
+	
+		if (document.getElementById('radio_1').childNodes[0].checked)
+			var filter_src = document.getElementById('radio_1').childNodes[1].src;
+		else if (document.getElementById('radio_2').childNodes[0].checked)
+			var filter_src = document.getElementById('radio_2').childNodes[1].src;
+		else if (document.getElementById('radio_3').childNodes[0].checked)
+			var filter_src = document.getElementById('radio_3').childNodes[1].src;
+		else if (document.getElementById('radio_4').childNodes[0].checked)
+			var filter_src = document.getElementById('radio_4').childNodes[1].src;
+		request.open('Post', 'index.php?action=upload', true);
+		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		currentX_txt = currentX - (preview.width / 2);
+		currentY_txt = currentY - (preview.height / 2);
+		postRequest = "filterX=" + currentX_txt + "&filterY=" + currentY_txt + "&filter="
+			+ filter_src + "&img=" + img + "&preview_width=" + preview_width + "&preview_height=" + preview_height;
+		request.send(postRequest);
+		
+		request.onreadystatechange = function () {
+			if (request.readyState == 4 && request.status == 200) {
+				var response = request.responseText.split(";");
+				var my_gallery = document.getElementById('my_gallery');
+				new_pic = document.createElement('img');
+				new_pic.src = response[1];
+				new_pic.id = "pic_src_gallery;" + response[0];
+				my_gallery.prepend(new_pic);
+			}
+		};
+  });
 
 
-function initialClick(e) {
-  // console.log(wrapper);
- if (moving) {
-   document.removeEventListener("mousemove", move);
-   moving = !moving;
-   return;
- }
+// ********************** GET UPLOADED IMAGE AND STREAM IT **********************
+	var upload_file_button = document.getElementById('upload_file_button');
+	var upload_file = document.getElementById('upload_file');
 
- moving = !moving;
- image = preview;
+	upload_file.addEventListener('change', function (ev) {
+		var img = new Image();
 
- document.addEventListener("mousemove", move, false);
- wrapper.addEventListener("mouseout", function () {
-  console.log("mouseout");
- }, false);
-}
+		img.onerror = function() {
+			alert("Only images and gifs are allowed for upload");
+		}
+		clearInterval(streaming_vid);
+		src = URL.createObjectURL(this.files[0]);
+		img.src = src;
+		img.onload = draw_upload;
+		erase_button_div.style.display = 'flex';
+		upload_button_div.style.display = 'flex';
+	}, false);
 
-// ------------------ Define action for buttons --------
-var pic_button = document.querySelector('#pic_button');
-var another_button = document.getElementById("another_button");
+	function draw_upload() {
+		src_upload = this;
+		streamUpload(this)
 
-pic_button.addEventListener('click', function(ev){
-  if (video.style.display == "none")
-    document.getElementById("erase_button").click();
-  else
-    takepicture();
-  ev.preventDefault();
-}, false);
+		function streamUpload(src) {
+			streaming_upload = setInterval(function () {
+				drawUpload(src, ctx, width, height);
+				drawFilter();
+			}, 1000 / 30);
+		}
+	
+		function drawUpload(src, ctx, width, height) {
+			if (wrapper.clientWidth <= 750) {
+				width = 310;
+				height = 310 * 2/3;
+			}
+			else {
+				width = 640;
+				height = 480;
+			}
+	
+			canvas.width = width;
+			canvas.height = height;
+			ctx.drawImage(src, 0, 0, width, height);
+		}
+	}
 
-erase_button.addEventListener('click', function(ev) {
-  // ---FRONT BUTTONS ---
-  canvas.style.display = 'none';
-  video.style.display = 'inline-flex';
-  erase_button_div.style.display = 'none';
-  upload_button_div.style.display = 'none';
-});
+	upload_file_button.addEventListener('click', function(ev) {
+		upload_file.click();
+	}, false);
 
-// ------------------ Creates the canvas and displays it within overlay --------
-
-function takepicture() {
-  canvas.style.top = 0;
-  width = video.offsetWidth;
-  height = video.offsetHeight;
-  canvas.width = width;
-  canvas.height = height;
-  video.style.display = "none";
-  erase_button_div.style.display = "flex";
-  upload_button_div.style.display = "flex";
-  canvas.getContext('2d').drawImage(video, 0, 0, width, height);
-  wrapper.appendChild(canvas);
-  canvas.style.display = "inline-flex";
-};
-
-// ------------------ Upload to server to merge images --------
-
-upload_button.addEventListener('click', function(ev) {
-
-  // ---FRONT BUTTONS ---
-  canvas.style.display = 'none';
-  video.style.display = 'inline-flex';
-  erase_button_div.style.display = 'none';
-  upload_button_div.style.display = 'none';
-
-  // --- SEND TO BACK ---
-  var request = new XMLHttpRequest();
-  var img = canvas.toDataURL("image/png");
-
-  if (document.getElementById('radio_1').childNodes[0].checked) {
-    var filter_src = document.getElementById('radio_1').childNodes[1].src;
-  }
-  else if (document.getElementById('radio_2').childNodes[0].checked) {
-    var filter_src = document.getElementById('radio_2').childNodes[1].src;
-  }
-  else if (document.getElementById('radio_3').childNodes[0].checked) {
-    var filter_src = document.getElementById('radio_3').childNodes[1].src;
-  }
-  request.open('Post', 'index.php?action=upload', true);
-  request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  request.send("filter=".concat(filter_src).concat("&img=".concat(img)));
-  // window.location = "index.php?action=picture";
-  console.log(request.response);
-  return function (request) {
-    console.log(request);
-  } (request);
-  // console.log(request.responseText);
-  // return function (this.responseText) {
-
-  // }
-});
-
-// ------------------ Sets the value of the upload form to the image --------
-
-// function add_my_gallery(pic_id) {
-//   console.log(pic_id);
-//   if (isset(pic_id)) {
-//     console.log(pic_id);
-//     my_gallery = document.getElementById('my_gallery');
-//     new_pic = document.getElementById("pic_src_gallery;".concat(pic_id));
-//     console.log(new_pic);
-//     my_gallery.appendChild(new_pic);
-//   }
-// }
-
-// ------------------ Sets the value of the upload form to the image --------
+})();

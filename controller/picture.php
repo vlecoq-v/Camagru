@@ -5,9 +5,8 @@ function post_user () {
 	$pics = new pics();
 
 	$pics->get_users();
-	foreach ($pics->all as $post) {
+	foreach ($pics->all as $post)
 		html_old_posts($post);
-	}
 }
 
 function html_old_posts($post) {

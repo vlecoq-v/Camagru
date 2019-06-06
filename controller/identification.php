@@ -1,6 +1,7 @@
 <?php
 $user = new user();
 
+// ********************** CHECK THE FORM RETURN AND INFORMATION **********************
 if ($_POST['submit-login']) {
 	if ($user->connect($_POST['username'], $_POST['pwd'])) {
 		if ($user->check_active($_POST['username'])) {
@@ -45,8 +46,7 @@ if ($_POST['OK_button']) {
 
 require_once('view/identification.php');
 
-// <------------------- mail functions ------------------->
-
+// ********************** MAIL FUNCTIONS **********************
 function mail_chg_pwd($user, $new_pwd) {
 	$to = $user['mail'];
 	$subject = 'Change of password'; 
@@ -84,15 +84,15 @@ function send_mail() {
 	mail($to, $subject, $message, $headers);
 }
 
-// <------------------- others ------------------->
+// ********************** PASSWORD GENERATION **********************
 
 function randomPassword() {
     $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-    $pass = array(); //remember to declare $pass as an array
-    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+    $pass = array();
+    $alphaLength = strlen($alphabet) - 1;
     for ($i = 0; $i < 8; $i++) {
         $n = rand(0, $alphaLength);
         $pass[] = $alphabet[$n];
     }
-    return implode($pass); //turn the array into a string
+    return implode($pass);
 }

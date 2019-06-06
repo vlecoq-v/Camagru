@@ -9,6 +9,5 @@
 				</div>
 			</footer>
 		</div>
-		<!-- <script src="public/js/burger.js"></script> -->
 	</body>
 </html>

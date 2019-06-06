@@ -13,25 +13,21 @@ if ($_POST['submit_comment']) {
 $comm->get_all($pic_id);
 pic_info($pic_id, $comm->all, $like->count, $like->is_liked($pic_id));
 
-if ($_GET['mail'] == 1) {
+if ($_GET['mail'] == 1)
 	comment_mail();
-}
 
 
-// <---------------------- get and display info --------------------->
-
+// ********************** GET AND DISPLAY INFO **********************
 function pic_info($pic_id, $comm_all, $like_count, $is_liked) {
 	$pic = new pics();
 	if (!$pic->get_1($pic_id))
 		exit(display_warning("no post at this address"));
-	else {
+	else
 		html_pic($pic->new, $_SERVER['QUERY_STRING'], $comm_all, $like_count, $is_liked, $pic_id);
-	}
 }
 
 
-// <---------------------- send mail --------------------->
-
+// ********************** MAIL FOR COMMENTARIES **********************
 function comment_mail() {
 	$pic = new pics();
 	$user = new user();
@@ -40,9 +36,8 @@ function comment_mail() {
 	$pic->get_mail_author();
 	$author_post = $pic->new['username'];
 
-	if (!$user->check_notif($author_post)) {
+	if (!$user->check_notif($author_post))
 		return ;
-	}
 	$to = $pic->new['mail'];
 	$subject = 'Your post was commented'; 
 	$headers = 'From:noreply@camagru.com' . "\r\n";
@@ -55,9 +50,9 @@ function comment_mail() {
 	mail($to, $subject, $message, $headers);
 }
 
-// <---------------------- HTML generators --------------------->
 
 
+// ********************** HTML GENERATORS **********************
 function html_comments($pic_id, $comm_all) {
 	$comm = new comm();
 	$string = "";
@@ -78,7 +73,6 @@ function html_comments($pic_id, $comm_all) {
 }
 
 function html_pic($pic, $query_string, $comm_all, $like_count, $is_liked, $pic_id) {
-	// print_r($pic);
 	echo "
 	<body>
 		<section class='hero'>

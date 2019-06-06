@@ -10,7 +10,6 @@
 		<link rel="stylesheet" href="public/css/mycss.css">
   </head>
   <body>
-	  <!-- nvabar ---------------------------------------------------------------------------------------->
 		<nav class="navbar is-primary is-bold" role="navigation" aria-label="main navigation">
 			<div class="navbar-brand">
 				<a href="index.php?offset=0" class="navbar-item">

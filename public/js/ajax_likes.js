@@ -7,9 +7,8 @@ request.onreadystatechange = function() {
 			var nb_like = document.getElementById(id.concat("_nb"));
 			nb_like.innerHTML = response[1];
 			var like = document.getElementById(id);
-			if (response[0] == "false") {
+			if (response[0] == "false")
 				like.className = "icon is-small";
-			}
 			else 
 				like.className = "icon is-small has-text-primary";
     }

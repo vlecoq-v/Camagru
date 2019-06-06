@@ -15,7 +15,6 @@ class comm {
 		$stmt->bindValue(":pic_id", $pic_id);
 		$stmt->execute();
 		$this->count = $stmt->fetch()[0];
-		// $this->count = $stmt->rowcount();
 	}
 
 	public function get_all($pic_id) {

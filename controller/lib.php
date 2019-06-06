@@ -1,7 +1,5 @@
 <?php
-
 function mail_is_correct($mail) {
-	// echo $mail;
 	if (filter_var($mail, FILTER_VALIDATE_EMAIL) == False)
 		return False;
 	else

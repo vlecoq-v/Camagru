@@ -1,14 +1,12 @@
 <?php
-
 $user = new user();
-
-if (!$user->connect($_SESSION['user']['username'])) {
+if (!$user->connect($_SESSION['user']['username']))
 	exit(display_warning("something went wrong connecting to your account"));
-}
 
-if ($_POST['button_notif']) {
+if ($_POST['button_notif'])
 	$user->change_notif();
-}
+
+// ********************** CHECK MODIFICATIONS **********************
 chg_credentials($user);
 
 function chg_credentials ($user) {

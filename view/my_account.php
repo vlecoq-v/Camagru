@@ -1,12 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Login</title>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-		<link href="public/css/style_id.css" rel="stylesheet" type="text/css">
-	</head> -->
 	<body>
 		<section class="hero">
 			<div class="identification">
@@ -25,9 +16,7 @@
 						</label>
 						<input type="text" name="username" placeholder="<?php echo $_SESSION['user']['username']?>" id="username_rgstr" required>
 						<input type="submit" value="update my username" id="submit_chg_username" name="submit_chg_username">
-						<!-- <button type="button" value="update my username" id="submit_chg_username"></button> -->
 					</form>
-						<!-- <button id="submit_chg_username"></button> -->
 					<form action="index.php?action=my_account" method="post">
 						<label for="password">
 							<i class="fas fa-lock"></i>
