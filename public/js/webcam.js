@@ -1,14 +1,14 @@
 (function() {
 	var canvas = document.getElementById('canvas');
-		ctx = canvas.getContext('2d');
-		video = document.getElementById('videoElement');
-		vendorUrl = window.URL || window.webkitURL;
-		wrapper = document.getElementById('close_wrapper');
-		width = 0;
-		height = 0;
-		streaming_vid = 0;
-		streaming_filter = 0;
-		src_upload = 0;
+	var	ctx = canvas.getContext('2d');
+	var	video = document.getElementById('videoElement');
+	// var	vendorUrl = window.URL || window.webkitURL;
+	var	wrapper = document.getElementById('close_wrapper');
+	var	width = 0;
+	var	height = 0;
+	var	streaming_vid = 0;
+	var	streaming_filter = 0;
+	var	src_upload = 0;
 		
 	
 	navigator.getMedia =	navigator.getUserMedia ||
@@ -234,7 +234,7 @@
 
 	function draw_upload() {
 		src_upload = this;
-		streamUpload(this)
+		streamUpload(this);
 
 		function streamUpload(src) {
 			streaming_upload = setInterval(function () {
