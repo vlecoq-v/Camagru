@@ -5,7 +5,6 @@ class user {
 	public $info;
 
 // ------------- USER IDENTIFICATION ---------------
-
 	public function connect($username, $pwd = NULL, $hash = 0) {
 		$db = $this->db_connect();
 		if (!is_null($pwd)) {
@@ -167,11 +166,12 @@ class user {
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(":mail", $mail);
 		$stmt->execute();
-		$this->info = $stmt->fetch();
-		if (is_null($this->info))
-			return (null);
-		else
+		;
+		// print_r($this->info);
+		if ($this->info = $stmt->fetch())
 			return True;
+		else
+			return False;
 	}
 
 	public function get_info() {

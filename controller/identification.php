@@ -17,13 +17,15 @@ if ($_POST['submit-login']) {
 		display_warning('Wrong credentials');
 }
 else if ($_POST['submit-register']) {
-	if ($user->mail_exists($_POST['mail']) || $user->username_exists($_POST['username']))
-		exit (display_warning("mail or username already exists"));
+	if ($user->mail_exists($_POST['mail']))
+		display_warning("mail is already taken");
+	else if ($user->username_exists($_POST['username']))
+		display_warning("username is already taken");
 	else if (!mail_is_correct($_POST['mail']))
 		display_warning("mail is incorrect</br>");
 	else if (!pwd_is_correct($_POST['pwd']))
-		exit (display_warning("pwd should contain at least 1 normal case letter,
-			1 upper case letter and 1 number</br>"));
+		display_warning("pwd should contain at least 1 normal case letter,
+			1 upper case letter and 1 number</br>");
 	else if ($user->create_new($_POST['mail'], $_POST['pwd'], $_POST['username'])) {
 		display_success('your account was created ! </br>
 			Please click on the activation link you received via mail to finalize your subscription');
@@ -35,13 +37,13 @@ else if ($_POST['submit-register']) {
 
 if ($_POST['OK_button']) {
 	$new_pwd = randomPassword();
-	echo $new_pwd;
 	if ($test = $user->set_info($_POST['mail'])) {
 		$user->change_pwd($new_pwd);
-		print_r($user->info);
 		mail_chg_pwd($user->info, $new_pwd);
+		display_success("an email was sent to you with your new password");
 	}
-	display_success("an email was sent to you with your new password");
+	else 
+		display_warning('We did not find that email, please try with another email address');
 }
 
 require_once('view/identification.php');
@@ -61,9 +63,8 @@ function mail_chg_pwd($user, $new_pwd) {
 	------------------------
 	
 	Please copy this link to activate your account:
-	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
+	http://localhost:4200/index.php?action=log_out';
 	$mail = mail($to, $subject, $message, $headers);
-	echo var_dump($mail);
 }
 
 function send_mail() {
@@ -85,7 +86,6 @@ function send_mail() {
 }
 
 // ********************** PASSWORD GENERATION **********************
-
 function randomPassword() {
     $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     $pass = array();

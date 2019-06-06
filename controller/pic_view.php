@@ -62,11 +62,10 @@ function html_comments($pic_id, $comm_all) {
 		<div class='content'>
 			<p>
 				<hr>
-				<strong>@" . $author . "</strong><small>31m</small>
+				<strong>@" . $author . "</strong>
 				<br>
 				" . $comment['comm'] . "
 			</p>
-
 		</div>";
 	}
 	return ($string);

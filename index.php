@@ -33,6 +33,8 @@ if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 		pic_view($_GET['pic_id']);
 	else if ($_GET['action'] == 'delete_pic')
 		delete_pic($_POST['id']);
+	else if ($_GET['action'] == 'verify')
+		verify();
 	else
 		display_warning("The page you are trying to find is not here!");
 }
@@ -40,6 +42,8 @@ if (isset($_GET['action']) AND $_SESSION['logged'] == 1) {
 else if (isset($_GET['action']) AND $_SESSION['logged'] == 0) {
 	if ($_GET['action'] == 'identification')
 		identification();
+	else if ($_GET['action'] == 'verify')
+		verify();
 	else {
 		display_warning("You need to connect or to create an account to access this page :)");
 		identification();

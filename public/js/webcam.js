@@ -130,15 +130,12 @@
 	}
   });
   
-
 // ********************** CHANGE FILTERS **********************
 	var radio_1 = document.getElementById('radio_1');
 	var radio_2 = document.getElementById('radio_2');
 	var radio_3 = document.getElementById('radio_3');
 	var radio_4 = document.getElementById('radio_4');
 	var radio_5 = document.getElementById('radio_5');
-
-
 
 	radio_1.addEventListener('click', function(ev) {
 	preview.src = radio_1.childNodes[1].src;
@@ -194,6 +191,8 @@
 			var filter_src = document.getElementById('radio_3').childNodes[1].src;
 		else if (document.getElementById('radio_4').childNodes[0].checked)
 			var filter_src = document.getElementById('radio_4').childNodes[1].src;
+		else if (document.getElementById('radio_5').childNodes[0].checked)
+			var filter_src = document.getElementById('radio_5').childNodes[1].src;
 		request.open('Post', 'index.php?action=upload', true);
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		currentX_txt = currentX - (preview.width / 2);
