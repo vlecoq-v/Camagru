@@ -31,7 +31,6 @@ class photo {
 		$src_w = $filter_width;
 		$src_h = $filter_height;
 
-		// echo $img;
 		$img_size = getimagesize($img);
 		$img_w = $img_size[0];
 		$img_h = $img_size[1];
