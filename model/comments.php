@@ -6,6 +6,7 @@ class comm {
 	public $all;
 	public $author;
 
+
 // ------------- GETTERS ---------------
 
 	public function get_comm($pic_id) {
@@ -39,6 +40,7 @@ class comm {
 		return ($stmt->fetch()['username']);
 	}
 
+
 // ------------- SETTERS ---------------
 
 	public function new_comm($pic_id, $user_id, $comm) {
@@ -54,6 +56,7 @@ class comm {
 		return False;
 	}
 
+	
 // ------------- DATABASE AND MISC ---------------
 	
 	private function db_connect() {

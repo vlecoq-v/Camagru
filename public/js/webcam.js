@@ -2,7 +2,6 @@
 	var canvas = document.getElementById('canvas');
 	var	ctx = canvas.getContext('2d');
 	var	video = document.getElementById('videoElement');
-	// var	vendorUrl = window.URL || window.webkitURL;
 	var	wrapper = document.getElementById('close_wrapper');
 	var	width = 0;
 	var	height = 0;
@@ -11,21 +10,53 @@
 	var	src_upload = 0;
 		
 	
-	navigator.getMedia =	navigator.getUserMedia ||
-							navigator.webkitGetUserMedia ||
-							navigator.mowGetUserMedia;
-
-	navigator.getMedia({
-		video: true,
-		audio: false
-	}, function (stream) {
-		video.srcObject = stream;
-		video.play();
-	}, function (error) {
-		console.log("an error occured");
-		console.log(error.code);
+	// ********************** GET THE CAMERA MOVING **********************
+	const constraints = {
+		audio: false,
+		video: true
+	}
+	
+	if (typeof navigator.mediaDevices === 'undefined') {
+					navigator.mediaDevices = {};
+				}
+				if (typeof navigator.mediaDevices.getUserMedia === 'undefined') {
+					navigator.mediaDevices.getUserMedia = function(constraints) {
+						// First get ahold of the legacy getUserMedia, if present
+						var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+						// Some browsers just don't implement it - return a rejected promise with an error
+						// to keep a consistent interface
+						if (!getUserMedia) {
+							return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
+						}
+						// Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
+						return new Promise(function(resolve, reject) {
+							getUserMedia.call(navigator, constraints, resolve, reject);
+						});
+					}
+				}
+	
+	navigator.mediaDevices
+					.getUserMedia(constraints)
+					.then(initSuccess)
+					.catch(function(err) {
+		console.log(err.name + ": " + err.message);
 	});
+	
+	function initSuccess(requestedStream) {
+		// Older browsers may not have srcObject
+		if ("srcObject" in video) {
+			video.srcObject = requestedStream;
+		} else {
+			// Avoid using this in new browsers, as it is going away.
+			video.src = window.URL.createObjectURL(stream);
+		}
+		video.onloadedmetadata = function(e) {
+			video.play();
+		};
+	}
 
+
+	// ********************** STREAM TO CANVAS **********************
 	video.addEventListener('play', streamVideo, false);
 	video.style.display = "none";
 
@@ -47,7 +78,6 @@
 		}
 		canvas.width = width;
 		canvas.height = height;
-
 		ctx.drawImage(video, 0, 0, width, height);
 	}
 
@@ -64,7 +94,9 @@
 
 	function streamFilter () {
 		mouseEvents();
-		drawFilter();
+		if (!preview.src.includes('null')) {
+			drawFilter();
+		}
 	}
 
 	preview_width = 0;
@@ -75,7 +107,6 @@
 		ratio = preview.height / preview.width;
 		preview_width = canvas.width * 2 / 5;
 		preview_height = preview_width * ratio;
-		
 		ctx.drawImage(preview, currentX-(preview.width/2), currentY-(preview.height/2), preview_width, preview_height);
 	}
 
@@ -102,13 +133,12 @@
 					currentX = e.pageX - this.offsetLeft;
 					currentY = e.pageY - this.offsetTop - 170;
 				}
-			   
 			 }
 		  };
 	}
 
 
-// ********************** FILTER MOVING **********************
+// ********************** BUTTONS **********************
 	var pic_button = document.getElementById('pic_button');
 
 	pic_button.addEventListener('click', function(ev){
@@ -121,15 +151,16 @@
   erase_button.addEventListener('click', function(ev) {
     // ---FRONT BUTTONS ---
     erase_button_div.style.display = 'none';
-	upload_button_div.style.display = 'none';
-	
-	streamVideo();
-	if (src_upload) {
-		clearInterval(streaming_upload);
-		src_upload = null;
-	}
-  });
-  
+		upload_button_div.style.display = 'none';
+		
+		streamVideo();
+		if (src_upload) {
+			clearInterval(streaming_upload);
+			src_upload = null;
+		}
+		});
+
+
 // ********************** CHANGE FILTERS **********************
 	var radio_1 = document.getElementById('radio_1');
 	var radio_2 = document.getElementById('radio_2');
@@ -138,18 +169,18 @@
 	var radio_5 = document.getElementById('radio_5');
 
 	radio_1.addEventListener('click', function(ev) {
-	preview.src = radio_1.childNodes[1].src;
-	radio_1.childNodes[0].checked = true;
+		preview.src = radio_1.childNodes[1].src;
+		radio_1.childNodes[0].checked = true;
 	}, false);
 
 	radio_2.addEventListener('click', function(ev) {
-	preview.style.width = "10px";
-	preview.src = radio_2.childNodes[1].src;
+		preview.style.width = "10px";
+		preview.src = radio_2.childNodes[1].src;
 	}, false);
 
 	radio_3.addEventListener('click', function(ev) {
-	preview.src = radio_3.childNodes[1].src;
-	radio_3.childNodes[0].checked = true;
+		preview.src = radio_3.childNodes[1].src;
+		radio_3.childNodes[0].checked = true;
 	}, false);
 
 	radio_4.addEventListener('click', function(ev) {
@@ -161,6 +192,12 @@
 		preview.src = radio_5.childNodes[1].src;
 		radio_5.childNodes[0].checked = true;
 		}, false);
+
+		radio_6.addEventListener('click', function(ev) {
+			preview.src = null;
+			radio_6.childNodes[0].checked = true;
+			}, false);
+ 
 
 // ********************** UPLOAD TO SERVER TO MERGE IMAGES **********************
 	upload_button.addEventListener('click', function(ev) {
@@ -178,11 +215,9 @@
 			clearInterval(streaming_upload);
 			src_upload = null;
 		}
-		else 
-			draw(video, ctx, width, height);
-		
+
 		var img = canvas.toDataURL("image/png");
-	
+		
 		if (document.getElementById('radio_1').childNodes[0].checked)
 			var filter_src = document.getElementById('radio_1').childNodes[1].src;
 		else if (document.getElementById('radio_2').childNodes[0].checked)
@@ -193,6 +228,8 @@
 			var filter_src = document.getElementById('radio_4').childNodes[1].src;
 		else if (document.getElementById('radio_5').childNodes[0].checked)
 			var filter_src = document.getElementById('radio_5').childNodes[1].src;
+		else if (document.getElementById('radio_6').childNodes[0].checked)
+			var filter_src = null;
 		request.open('Post', 'index.php?action=upload', true);
 		request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		currentX_txt = currentX - (preview.width / 2);
@@ -221,6 +258,10 @@
 	upload_file.addEventListener('change', function (ev) {
 		var img = new Image();
 
+		if (src_upload) {
+			clearInterval(streaming_upload);
+		}
+
 		img.onerror = function() {
 			alert("Only images and gifs are allowed for upload");
 		}
@@ -239,7 +280,9 @@
 		function streamUpload(src) {
 			streaming_upload = setInterval(function () {
 				drawUpload(src, ctx, width, height);
-				drawFilter();
+				if (!preview.src.includes('null')) {
+					drawFilter();
+				}
 			}, 1000 / 30);
 		}
 	

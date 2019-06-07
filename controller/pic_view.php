@@ -51,7 +51,6 @@ function comment_mail() {
 }
 
 
-
 // ********************** HTML GENERATORS **********************
 function html_comments($pic_id, $comm_all) {
 	$comm = new comm();

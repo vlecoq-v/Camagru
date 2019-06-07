@@ -19,6 +19,9 @@ if ($_POST['submit-login']) {
 else if ($_POST['submit-register']) {
 	if ($user->mail_exists($_POST['mail']))
 		display_warning("mail is already taken");
+	else if (str_is_script($_POST['username'])) {
+		display_warning("opening and closing <> are not allowed in username");
+	}
 	else if ($user->username_exists($_POST['username']))
 		display_warning("username is already taken");
 	else if (!mail_is_correct($_POST['mail']))
@@ -47,6 +50,7 @@ if ($_POST['OK_button']) {
 }
 
 require_once('view/identification.php');
+
 
 // ********************** MAIL FUNCTIONS **********************
 function mail_chg_pwd($user, $new_pwd) {
@@ -84,6 +88,7 @@ function send_mail() {
 	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
 	mail($to, $subject, $message, $headers);
 }
+
 
 // ********************** PASSWORD GENERATION **********************
 function randomPassword() {

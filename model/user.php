@@ -19,7 +19,7 @@ class user {
 			$sql = "SELECT * FROM users WHERE username = :username";
 			$stmt = $db->prepare($sql);
 		}
-		$stmt->bindValue(':username', $username, PDO::PARAM_STR);
+		$stmt->bindValue(':username', htmlentities($username), PDO::PARAM_STR);
 		$stmt->execute();
 		if ($this->info = $stmt->fetch()) {
 			$_SESSION['logged'] = 1;
@@ -104,7 +104,6 @@ class user {
 	}
 
 // ------------- INFORMATION VERIFICATIONS ---------------
-
 	public function mail_exists($mail) {
 		$db = $this->db_connect();
 		$sql = "SELECT * FROM users WHERE mail = :mail";
@@ -158,8 +157,8 @@ class user {
 			return False;
 	}
 
-// --------------- OTHERS ---------------
 
+// --------------- OTHERS ---------------
 	public function set_info($mail) {
 		$db = $this->db_connect();
 		$sql = "SELECT * FROM users WHERE mail = :mail";
@@ -167,7 +166,6 @@ class user {
 		$stmt->bindValue(":mail", $mail);
 		$stmt->execute();
 		;
-		// print_r($this->info);
 		if ($this->info = $stmt->fetch())
 			return True;
 		else
@@ -195,7 +193,9 @@ class user {
 			unset($this->info[$i]);
 			$i += 1;
 		}
+		$str_username = $this->info['username'];
 		$_SESSION['user'] = $this->info;
+		$_SESSION['user']['username'] = htmlentities($str_username);
 		unset($_SESSION['user']['pwd']);
 	}
 }

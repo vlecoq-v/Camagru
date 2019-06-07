@@ -1,11 +1,13 @@
 <?php
 $user = new user();
-if (!$user->connect($_SESSION['user']['username']))
+if (!$user->connect($_SESSION['user']['username'])) {
 	exit(display_warning("something went wrong connecting to your account"));
+}
 
 if ($_POST['button_notif'])
 	$user->change_notif();
 
+	
 // ********************** CHECK MODIFICATIONS **********************
 chg_credentials($user);
 
@@ -25,6 +27,10 @@ function chg_credentials ($user) {
 		}
 	}
 	else if ($_POST['submit_chg_username']) {
+		if (str_is_script($_POST['username'])) {
+			display_warning("opening and closing <> are not allowed in username");
+			return ;
+		}
 		if ($user->username_exists($_POST['username'])) {
 			display_warning("username already exists");
 			return ;

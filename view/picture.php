@@ -50,6 +50,7 @@
 										<a src="#" id="radio_3"><input type="radio" name="filters"><img src="public/img/filters/sayan-hair.png" alt="speed effect" id="radio_3_img"></a>
 										<a src="#" id="radio_4"><input type="radio" name="filters"><img src="public/img/filters/ken.png" alt="speed effect" id="radio_4_img"></a>
 										<a src="#" id="radio_5"><input type="radio" name="filters"><img src="public/img/filters/straw_hat2.png" alt="speed effect" id="radio_5_img"></a>
+										<a src="#" id="radio_6"><input type="radio" name="filters">#nofilter</a>
 									</form>
 								</div>
 							</nav>

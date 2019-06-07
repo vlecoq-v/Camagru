@@ -15,9 +15,10 @@ class photo {
 		$filter = explode("4200/", $filter)[1];
 
 		$path = $folderPath . $fileName;
+		echo $path;
 		file_put_contents($path, $image_decoded);
 
-		 $img = $this->merge($path, $filter, $filterX, $filterY, $filter_width, $filter_height);
+		$img = $this->merge($path, $filter, $filterX, $filterY, $filter_width, $filter_height);
 		unlink($path);
 		imagepng($img, $path);
 		imagedestroy($img);
@@ -30,6 +31,7 @@ class photo {
 		$src_w = $filter_width;
 		$src_h = $filter_height;
 
+		// echo $img;
 		$img_size = getimagesize($img);
 		$img_w = $img_size[0];
 		$img_h = $img_size[1];

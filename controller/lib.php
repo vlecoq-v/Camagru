@@ -14,6 +14,15 @@ function pwd_is_correct($pwd) {
 	}
 }
 
+function str_is_script($str) {
+	if (preg_match('/^<.*>/', $str, $matches) == 0) {
+		return False;
+	}
+	else {
+		return True;
+	}
+}
+
 function display_warning($warning) {
 	echo "
 	<div class='box has-text-centered' style='border-top: 2vh'>

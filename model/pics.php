@@ -6,8 +6,8 @@ class pics {
 	public $all;
 	public $new;
 
-// ------------- GETTERS ---------------
 
+// ------------- GETTERS ---------------
 	public function get_count() {
 		$db = $this->db_connect();
 		$sql = "SELECT COUNT(*) FROM pics";
@@ -108,24 +108,21 @@ class pics {
 		}
 	}
 
-// ------------- DELETE ---------------
 
+// ------------- DELETE ---------------
 	public function delete($pic_id, $author_id) {
 		$db = $this->db_connect();
 		if ($this->new['usr_id'] != $author_id)
 			return False;
 		$sql = "DELETE FROM pics WHERE pic_id = :pic_id";
 		$stmt = $db->prepare($sql);
-		print_r($pic_id);
 		$stmt->bindValue(":pic_id", $pic_id);
-		echo $stmt->execute();
+		$stmt->execute();
 		return True;
 	}
 
 
 // ------------- DATABASE & MISC ---------------
-
-
 	private function db_connect() {
 		include('config/database.php');
 		try {
