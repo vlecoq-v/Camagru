@@ -87,8 +87,11 @@ function html_pagination($offset) {
 	</div>
 	<section class='section'>
 		<nav class='pagination is-centered' role='navigation' aria-label='pagination'>
-			<a href='index.php?offset=" . $offset_minus . "' class='pagination-previous'>Previous</a>
-			<a href='index.php?offset=" . $offset_plus . "' class='pagination-next'>Next page</a>
+			<a href='index.php?offset=" . $offset_minus . "' class='pagination-previous'>Previous</a>";
+	if ($offset + 1 < $count)
+		echo "
+			<a href='index.php?offset=" . $offset_plus . "' class='pagination-next'>Next page</a>";
+	echo "
 			<ul class='pagination-list'>";
 	while ($i < $count) {
 		$current = $i + 1;

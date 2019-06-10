@@ -4,6 +4,7 @@ session_start();
 class user {
 	public $info;
 
+
 // ------------- USER IDENTIFICATION ---------------
 	public function connect($username, $pwd = NULL, $hash = 0) {
 		$db = $this->db_connect();
@@ -33,12 +34,14 @@ class user {
 
 	public function create_new($mail, $pwd, $username) {
 		$db = $this->db_connect();
-		$sql = "INSERT INTO users(username, mail, pwd)
-			VALUES(:username, :mail, :pwd)";
+		$hash = md5(rand(0, 1000));
+		$sql = "INSERT INTO users(username, mail, pwd, hash)
+			VALUES(:username, :mail, :pwd, :hash)";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':mail', htmlentities($mail), PDO::PARAM_STR);
 		$stmt->bindValue(':pwd', hash('whirlpool', $pwd), PDO::PARAM_STR);
 		$stmt->bindValue(':username', htmlentities($username), PDO::PARAM_STR);
+		$stmt->bindValue(':hash', $hash, PDO::PARAM_STR);
 		$result = $stmt->execute();
 		return $result;
 	}
@@ -46,8 +49,8 @@ class user {
 	public function set_active() {
 		$db = $this->db_connect();
 		$sql = "UPDATE users
-		SET validated = 1
-		WHERE username = :username";
+			SET validated = 1
+			WHERE username = :username";
 		$stmt = $db->prepare($sql);
 		$stmt->bindValue(':username', $this->info['username'], PDO::PARAM_STR);
 		$stmt->execute();
@@ -117,6 +120,19 @@ class user {
 			return False;
 	}
 
+	public function get_hash($hash) {
+		$db = $this->db_connect();
+		$sql = "SELECT * FROM users WHERE hash = :hash";
+		$stmt = $db->prepare($sql);
+		$stmt->bindValue(':hash', $hash, PDO::PARAM_STR);
+		$stmt->execute();
+		$result = $stmt->fetch();
+		if ($stmt->rowcount() > 0)
+			return $result;
+		else
+			return False;
+	}
+
 	public function username_exists($username) {
 		$db = $this->db_connect();
 		$sql = "SELECT * FROM users WHERE username = :username";
@@ -180,6 +196,7 @@ class user {
 		include('config/database.php');
 		try {
 			$db = new PDO ($DB_DSN, $DB_USER, $DB_PASSWORD);
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return($db);
 		}
 		catch (PDOException $e) {

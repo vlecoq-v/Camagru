@@ -35,8 +35,7 @@ function comment_mail() {
 	$pic->get_1($_GET['pic_id']);
 	$pic->get_mail_author();
 	$author_post = $pic->new['username'];
-
-	if (!$user->check_notif($author_post))
+	if (!$user->check_notif($author_post) || $author_post == $_SESSION['user']['username'])
 		return ;
 	$to = $pic->new['mail'];
 	$subject = 'Your post was commented'; 

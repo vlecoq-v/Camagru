@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
 		<link href="public/css/style_id.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="public/css/mycss.css">
+		<link rel="icon" type="image/png" href="public/img/filters/ramen-logo.png">
   </head>
   <body>
 		<nav class="navbar is-primary is-bold" role="navigation" aria-label="main navigation">

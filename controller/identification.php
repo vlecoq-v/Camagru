@@ -1,6 +1,7 @@
 <?php
 $user = new user();
 
+
 // ********************** CHECK THE FORM RETURN AND INFORMATION **********************
 if ($_POST['submit-login']) {
 	if ($user->connect($_POST['username'], $_POST['pwd'])) {
@@ -72,6 +73,9 @@ function mail_chg_pwd($user, $new_pwd) {
 }
 
 function send_mail() {
+	$user = new user();
+	$user->connect($_POST['username']);
+	$hash = $user->info['hash'];
 	$to = $_POST['mail'];
 	$subject = 'Signup | Verification'; 
 	$headers = 'From:noreply@camagru.com' . "\r\n";
@@ -85,7 +89,7 @@ function send_mail() {
 	------------------------
 	
 	Please copy this link to activate your account:
-	http://localhost:4200/index.php?action=verify&username='.$_POST['username']. '&hash=' . hash('whirlpool', $_POST['pwd']);
+	http://localhost:4200/index.php?action=verify&username='. $_POST['username'] . '&hash=' . $hash;
 	mail($to, $subject, $message, $headers);
 }
 

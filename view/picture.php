@@ -29,7 +29,7 @@
 									<button id="erase_button" class="button is-dark">Erase preview</button>
 								</a>
 								<a href="#" class="level-item" style="display:none" id="upload_button_div">
-									<button id="upload_button" class="button is-dark">Upload picture</button>
+									<button id="upload_button" class="button is-dark">Save picture</button>
 								</a>
 							</nav>
 							<nav class="level">

@@ -174,8 +174,8 @@
 	}, false);
 
 	radio_2.addEventListener('click', function(ev) {
-		preview.style.width = "10px";
 		preview.src = radio_2.childNodes[1].src;
+		radio_2.childNodes[0].checked = true;
 	}, false);
 
 	radio_3.addEventListener('click', function(ev) {
@@ -257,23 +257,22 @@
 
 	upload_file.addEventListener('change', function (ev) {
 		var img = new Image();
-
 		if (src_upload) {
 			clearInterval(streaming_upload);
 		}
-
 		img.onerror = function() {
 			alert("Only images and gifs are allowed for upload");
 		}
-		clearInterval(streaming_vid);
 		src = URL.createObjectURL(this.files[0]);
 		img.src = src;
 		img.onload = draw_upload;
-		erase_button_div.style.display = 'flex';
-		upload_button_div.style.display = 'flex';
 	}, false);
 
 	function draw_upload() {
+		clearInterval(streaming_vid);
+		
+		erase_button_div.style.display = 'flex';
+		upload_button_div.style.display = 'flex';
 		src_upload = this;
 		streamUpload(this);
 
