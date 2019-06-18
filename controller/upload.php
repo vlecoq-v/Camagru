@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 $photo = new photo;
 $user = new user;
 

@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 function post_user () {
 	$pics = new pics();
 

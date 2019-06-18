@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class pics {
 	public $count;
 	public $all;

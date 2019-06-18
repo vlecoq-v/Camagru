@@ -3,7 +3,6 @@ session_start();
 require_once('controller/controller.php');
 include_once('controller/lib.php');
 
-
 // ********************** SPECIFIC AJAX PAGES **********************
 if ($_GET['action'] == 'like')
 	exit(like());

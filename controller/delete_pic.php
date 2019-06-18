@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 if (isset($_POST['id'])) {
 	$pic = new pics();
 	$pic->get_1($id);

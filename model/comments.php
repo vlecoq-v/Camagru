@@ -1,6 +1,4 @@
 <?php
-session_start();
-
 class comm {
 	public $count;
 	public $all;
