@@ -58,14 +58,12 @@ function html_comments($pic_id, $comm_all) {
 		$author = $comm->get_author($comment['user_id']);
 		$string .= "
 		<div class='content'>
-			<div class='box'>
-				<p>
-					<hr>
-					<strong>@" . $author . "</strong>
-					<br>
-					" . $comment['comm'] . "
-				</p>
-			</div>
+			<p>
+				<hr>
+				<strong>@" . $author . "</strong>
+				<br>
+				" . $comment['comm'] . "
+			</p>
 		</div>";
 	}
 	return ($string);
@@ -100,7 +98,7 @@ function html_pic($pic, $query_string, $comm_all, $like_count, $is_liked, $pic_i
 					</nav>
 					<article class='media'>
 						<div class='media-content'>
-							" . html_comments($pic['pic_id'], $comm_all) . "
+							" . html_comments($pic['pic_id'], $comm_all) ."
 							<form action='index.php?" . $query_string . "&mail=1' method='post'>
 								<div class='field'>
 									<label class='label'>Comments!</label>
